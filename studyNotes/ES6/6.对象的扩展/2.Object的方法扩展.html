@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>2.Object的方法扩展</title>
+</head>
+<body>
+  <script>
+    // 查看 Object 中的方法
+    console.dir(Object)
+    // Object() 可以将参数变成对象
+    console.log(Object(1))    // Number {1}
+    console.log(Object(true))   // Boolean {true}
+
+    // Object.is() 方法:判断两个值是否相等
+    // ===:绝对等于,判断 NaN 跟 NaN 不等,但是 -0 === 0 为 true
+    // 而 Object.is() 这能判断出 NaN 跟 NaN 相等,但是 -0 和 0 不相等
+    // 除了这两种特殊情况,其他的跟 === 判断结果一样
+    console.log(NaN === NaN)    // false
+    console.log(-0 === 0)     // true
+    console.log(Object.is(NaN, NaN))    // true
+    console.log(Object.is(0, -0))     // false
+
+    // Object.assign() 方法:合并对象
+    // Object.assign(obj1, obj2):将 obj2 合并到 obj1 上,返回 obj1
+    let obj1 = {name: "Tom"}
+    let obj2 = {age: 10}
+    Object.assign(obj1, obj2)
+    console.log(obj1)   // {name: "Tom", age: 10}
+
+    // ES7 中提供了对象的扩展运算符:...
+    let person = {...obj1, ...obj2}
+    console.log(person)   // {name: "Tom", age: 10}
+
+    // Object.getOwnPropertyDescriptor() 方法:获取一个对象中某个属性的描述
+    console.log(Object.getOwnPropertyDescriptor("123", "length"));
+    // 字符串的 length 不可以修改,字符串中的方法时不可以改变字符串的
+    /*
+    * configurable: false   是否可配置(是否可以删除这个属性)
+    * enumerable: false     是否可枚举(使用for...in遍历不出来即为不可枚举)
+    * value: 3 
+    * writable: false       是否可修改
+    */
+
+    // Object.keys() 方法:返回值为一个数组,里面放着所有可枚举的属性
+    console.log(Object.keys(person))    // ["name", "age"]
+
+    // Object.values() 方法:返回值为一个数组,里面放着可枚举的属性的键值
+    console.log(Object.values(person))    // ["Tom", 10]
+
+    // Object.entries() 方法:返回值为一个数组,数组中的每一项也是一个数组,数组的第一项是属性,第二项是键值
+    console.log(Object.entries(person))   // [["name", "Tom"], ["age", 10]]
+  </script> 
+</body>
+</html>

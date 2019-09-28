@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>3.其他数据类型解构赋值</title>
+</head>
+<body>
+  <script>
+    // 使用数组的解构赋值的形式,如果等号右边不是一个数组,默认将其转换为类数组(类似数组的对象,必须有一个 length 属性)
+    let [x, y] = "123"
+    console.log(x, y)   // 1 2
+
+    // 使用对象的解构赋值的形式,如果等号右边不是一个对象,默认转为对象,再进行赋值
+    let {a} = 1
+    console.log(a)    // undefined
+    let {__proto__:b} = 1   // Number {0, constructor: ƒ, toExponential: ƒ, toFixed: ƒ, toPrecision: ƒ, …}
+    console.log(b)
+
+    let {c} = "1234"
+    console.log(c)    //undefined
+    let {length:d} = "1234"
+    console.log(d)    // 4
+  </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>1.对象的简洁方式</title>
+</head>
+<body>
+  <script>
+    let name = "Tom", age = 100
+    let person = {name, age}
+    console.log(person)   // {name: "Tom", age: 100}
+    let str = "name"
+    let obj = {
+      fn(){},
+      // fn: function(){}
+      // 属性名是字符串,当属性名是用 [],里面可以写变量,也可以进行字符拼接
+      [str]: name,
+      ["my" + str]: name
+    }
+    console.log(obj)    // {fn: ƒ, name: "Tom", myname: "Tom"}
+    console.log(obj.name)   // Tom
+  </script>
+</body>
+</html>

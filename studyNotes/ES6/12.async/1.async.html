@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>1.async</title>
+</head>
+<body>
+  <script>
+    // async 函数默认返回一个 Promise 对象
+    async function getA(){
+      // return 出的内容就是成功回调的函数
+      // 这里有错误的话,就会被 catch 捕获到
+      // throw new Error("对不起")
+      return "哈哈哈"
+    }
+    getA().then((res) => {
+      console.log(res)
+    }).catch((err) => {
+      console.log(err)
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>4.函数参数的解构赋值</title>
+</head>
+<body>
+  <script>
+    function getA(a) { 
+      console.log(a)    // [1, 2, 3, 4, 5]
+    }
+    getA([1, 2, 3, 4, 5])
+
+    function getB([a, b, c, ...d]) { 
+      console.log(a, b, c, d)   // 1 2 3 [4, 5]
+    }
+    getB([1, 2, 3, 4, 5])
+
+    function getC({name, age}){
+      console.log(name, age)    // Jack 18
+    }
+    getC({name: "Jack", age: 18})
+
+    // Cannot destructure property `name` of 'undefined' or 'null'(不能对“未定义”或“空”的属性“名称”进行结构更改)
+    // function getD({name="Joho", age=20}){
+    // }
+    // getD()
+
+    function getE({name="Joho", age=20} = {}){
+      console.log(name, age)    // Joho 20
+    }
+    getE()
+  </script>
+</body>
+</html>

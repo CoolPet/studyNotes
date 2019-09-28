@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>2.await</title>
+</head>
+<body>
+  <script>
+    let p = new Promise((resolve, reject) => {
+      resolve("Jack")
+    })
+    async function getA() {  
+      // await 后面是一个 Promise 实例,如果不是也会默认转为 Promise
+      // 直接让 Promise 实例的回调执行,返回执行时的参数
+      // await 执行的异步完成之后才会去执行后面的代码
+      // await 是一个语法糖,不用通过 then 就可以拿到 resolve/reject 的参数
+      return await p
+    }
+    getA().then((res) =>{
+      console.log(res)
+    }).catch((err) => {
+      console.log(err)
+    })
+  </script>
+</body>
+</html>

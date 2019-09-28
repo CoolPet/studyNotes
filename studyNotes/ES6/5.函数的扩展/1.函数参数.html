@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>1.函数参数</title>
+</head>
+<body>
+  <script>
+    // 参数默认值
+    function fn(x="Jack", y="Tom"){
+      console.log(x, y)   // 0 "Tom"
+    }
+    fn(0)   
+
+    // 参数使用解构赋值
+    function fn1({name="Rose", age=100}={}){
+      console.log(name, age)    // Rose 100
+    }
+    fn1({}) 
+    function fn2({name, age}={name: "Rose", age: 100}){
+      console.log(name, age)    // undefined undefined
+    }
+    fn2({})   
+
+    // length 属性,形参的个数,如果形参有默认值的话,length 就会失真,变成没有默认值形参的个数
+    function fn3(name, age){
+      console.log(fn3.length)    // 2
+    }
+    fn3(1, 2) 
+    function fn4(name, age=100){
+      console.log(fn4.length)    // 1
+    }
+    fn4(1, 2) 
+    function fn5(name="Tom", age=100){
+      console.log(fn5.length)    // 0
+    }
+    fn5(1, 2) 
+    /*如果设置了默认值的参数不是尾参数，那么length属性也不再计入后面的参数了*/
+    function fn6(name="Tom", age){
+      console.log(fn6.length)    // 0
+    }
+    fn6(1, 2) 
+
+    // 参数默认值位置:一般参数的默认值放在最后面
+    function fn7(x=10, y=20){
+      console.log(x, y)   // 1 20
+    }
+    fn7(1)
+
+    // araguments 类数组
+    function fn8(...arg){
+      console.log(arguments)    // Arguments(5) [1, 2, 3, 4, 5, callee: (...), Symbol(Symbol.iterator): ƒ]:对象
+      console.log(arg)    // [1, 2, 3, 4, 5]:数组
+    }
+    fn8(1, 2, 3, 4, 5)
+
+    // 参数作用域问题
+    // 函数执行的时候先给形参赋值,形参也是私有变量,如果给形参的默认值是一个变量,
+    // 先看是不是自己的私有变量,不是自己的私有变量的话,在找全局中是否有该变量,没有就报错
+    let m = 10, n = 100
+    function fn9(x=m, y=n){   // 如果在私有作用域中没有找到该变量,就去全局作用域进行寻找此变量
+      // 私有作用域:私有变量 x, y, m, n
+      console.log(x)    // 10
+      console.log(y)    // 100
+      let m = 50
+      let n = 500
+    }
+    fn9()
+    function fn10(x, y=x) { 
+      console.log(x)    // 1
+      console.log(y)    // 2
+    }
+    fn10(1)
+  </script>
+</body>
+</html>

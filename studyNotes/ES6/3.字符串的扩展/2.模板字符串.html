@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>2.模板字符串</title>
+</head>
+<body>
+  <script>
+    // `` 模板字符串:跟普通字符串一样使用,但是它可以添加变量,${} 进行变量的添加
+    let str = `哈哈`
+    console.log(str)    // 哈哈
+
+    // 普通字符串添加变量到页面中显示
+    let className = "box", name = "Jack"
+    document.body.innerHTML += "<h1 class=" + className + ">"+ name +"</h1>"
+    // ES6 模板字符串的写法
+    document.body.innerHTML += ` <h1 class="${className}">${name}</h1> `
+  </script>
+  <style>
+    .box{
+      color: red;
+    }
+  </style>
+</body>
+</html>

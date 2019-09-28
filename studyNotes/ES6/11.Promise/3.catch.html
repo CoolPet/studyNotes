@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>3.catch</title>
+</head>
+<body>
+  <div id="box"></div>
+  <script>
+    function loadImg(url) {  
+      return new Promise((resolve, reject) => {
+        let img = new Image()
+        img.src = url
+        img.onload = function(){
+          resolve(img)
+        }
+        img.onerror = function(e){
+          reject(e)
+        }
+      })
+    }
+
+    loadImg("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3638429004,1717840478&fm=26&gp=0.jpg").then((img) => {
+      box.appendChild(img)
+    }).catch((e) => {
+      // catch 捕获错误的/异常的信息,如果 new Promise 中有错误会被捕获,如果 then 中的回调有错误也会被捕获
+      // 一般最后会加一个 catch
+      console.log(e)
+    })
+  </script>
+</body>
+</html>

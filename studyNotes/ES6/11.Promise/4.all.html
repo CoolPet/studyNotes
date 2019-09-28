@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>4.all</title>
+</head>
+<body>
+  <script>
+    // 打印 Promise 的方法
+    console.dir(Promise)
+
+    // all 方法
+    // Promise.all([每一项都是 Promise 对象,如果不是默认转为 Promise 对象])
+    // 数组中每一项都是成功状态,才会走成功回调,默认将每一项的参数放在一个数组中传给回调函数
+    // 只要一个有错误就会走错误的回调,将第一个错误参数传给回调
+    let p1 = new Promise((resolve, reject) => {
+      resolve("Jack")
+    })
+    let p2 = new Promise((resolve, reject) => {
+      resolve("Tom")
+    })
+    let p3 = new Promise((resolve, reject) => {
+      resolve("Rose")
+    })
+    let pAll = Promise.all([p1, p2, p3])
+    console.log(pAll)
+    pAll.then((res) => {
+      console.log(res)    // ["Jack", "Tom", "Rose"]
+    }).catch((err) => {
+      console.log(err)
+    })
+  </script>
+</body>
+</html>

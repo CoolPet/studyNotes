@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>1.Set</title>
+</head>
+<body>
+  <script>
+    // Set 类似数组,只有值(value)没有键(key)
+    // 通过构造函数方式创建一个 Set 实例
+    // 参数是一个数组(或者是类似数组的,只要是有 iterable 接口的)
+    // 有 iterable 接口:数组, arguments,元素集合, Set, Map,字符串
+    console.log(new Set())    // Set(0) {}
+    console.log(new Set([1, 2, 3, 4]))    // Set(4) {1, 2, 3, 4}
+    console.log(new Set("1234"))    // Set(4) {"1", "2", "3", "4"}
+    function fn(){
+      console.log(new Set(arguments))   // Set(4) {1, 2, 3, 4}
+    }
+    fn(1, 2, 3, 4)
+
+    // Set 会默认去重
+    console.log(new Set("12151315411"))   // Set(5) {"1", "2", "5", "3", "4"}
+
+    // Set 的 size 属性:Set 实例的个数
+    // Set 中 add() 方法:增加,如果之前没有会加上,否则反之,返回值为增加后的 Set 实例(可以实现链式写法)
+    // 注意:参数一次只能增加一个
+    let set1 = new Set([1, 2, "哈哈", null, NaN, true])
+    console.log(set1.add(10))   // Set(7) {1, 2, "哈哈", null, NaN, true, 10}
+    console.log(set1.add(10).add(100))   // Set(8) {1, 2, "哈哈", null, NaN, true, 10, 100}
+
+    // Set 中 delete() 方法:删除,返回值为 true/false,如果里面有这一项,删除成功返回 true,没有此项删除失败返回 false
+    console.log(set1.delete(100))   // true
+    console.log(set1.delete(1000))    // false
+    console.log(set1)   // Set(7) {1, 2, "哈哈", null, NaN, true, 10}
+
+    // Set 中 clear() 方法:清空,没有返回值(undefined),没有参数
+    console.log(set1.clear())   // undefined
+    console.log(set1)   // Set(0) {}
+
+    // Set 中 has() 方法:判断有没有此项,返回值为 true/false
+    set1 = new Set([1, 2, "哈哈", null, NaN, true])
+    console.log(set1.has(NaN))    // true
+    console.log(set1.has(1000))   // false
+
+    // Set 中 forEach 方法:遍历
+    set1.forEach((item, index, input) => {
+      // Set 实例只有 value 没有 key
+      // item, index:当前项 value
+      // input:当前 Set 实例
+      console.log(item, index, input)
+      /*
+      * 1 1 Set(6) {1, 2, "哈哈", null, NaN, true}
+      * 2 2 Set(6) {1, 2, "哈哈", null, NaN, true}
+      * 哈哈 哈哈 Set(6) {1, 2, "哈哈", null, NaN, true}
+      * null null Set(6) {1, 2, "哈哈", null, NaN, true}
+      * NaN NaN Set(6) {1, 2, "哈哈", null, NaN, true}
+      * true true Set(6) {1, 2, "哈哈", null, NaN, true}
+      */
+    })
+
+    // Set 中 keys 方法:返回一个包含集合中所有键的迭代器
+    console.log(set1.keys())    // SetIterator {1, 2, "哈哈", null, NaN, true}:
+    for(let key of set1.keys()){
+      // key 仍然是 value 值
+      console.log(key)
+      /*
+      * 1
+      * 2
+      * 哈哈
+      * null
+      * NaN
+      * true
+      */
+    }
+    
+    // Set 中 values 方法:返回一个包含集合中所有值得迭代器
+    for(let val of set1.values()){
+      // val 仍然是 value 值
+      console.log(val)
+      /*
+      * 1
+      * 2
+      * 哈哈
+      * null
+      * NaN
+      * true
+      */
+    }
+
+    // Set 中 entries 方法:返回一个包含 Set 对象中所有元素得键值对迭代器
+    for(let [item, value] of set1.entries()){
+      // item, value 全都是 value 值
+      console.log(item, value)
+      /*
+      * 1 1
+      * 2 2 
+      * 哈哈 哈哈
+      * null null 
+      * NaN NaN
+      * true true
+      */
+    }
+  </script>
+</body>
+</html>

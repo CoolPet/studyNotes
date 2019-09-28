@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>3.扩展运算符</title>
+</head>
+<body>
+  <ul id="list">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+  <script>
+    // 扩展运算符: ...
+    // 1.将非数组变成数组(类数组)
+    let str = "123"
+    console.log([...str])   // ["1", "2", "3"]
+    let arr = list.getElementsByTagName("li")
+    console.log(arr)    // HTMLCollection(4) [li, li, li, li]:类数组
+    console.log([...arr])   // [li, li, li, li]
+    function fn(){
+      console.log(arguments)    // Arguments(3) [1, 2, 3, callee: ƒ, Symbol(Symbol.iterator): ƒ]:类数组
+      console.log([...arguments])   // [1, 2, 3]
+    }
+    fn(1, 2, 3)
+
+    // 2.将数组变成非数组
+    let arr1 = [1, 2, 3, 4]
+    let arr2 = [10, 20, 30, 40]
+    // 两个数组合并
+    console.log(arr1.concat(arr2))    // [1, 2, 3, 4, 10, 20, 30, 40]
+    console.log([...arr1,...arr2])    // [1, 2, 3, 4, 10, 20, 30, 40]
+    // 求数组的最大值
+    console.log(Math.max.apply(null, arr1))   // 4
+    console.log(eval("Math.max(" + arr1 + ")"))   // 4
+    console.log(Math.max(...arr1))    // 4
+  </script>
+</body>
+</html>

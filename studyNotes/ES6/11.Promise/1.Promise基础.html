@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>1.Promise基础</title>
+</head>
+<body>
+  <script>
+    // 执行顺序
+    // new Promise 中的函数 ==> 当前队列中的同步代码 ==> then 中的回调
+    let pro = new Promise((resolve, reject) => {
+      // resolve 函数
+      // reject 函数
+      // resolve 和 reject 两个函数只能执行一个
+      // 如果 Promise 中的函数有错误,就会执行 then 中的第二个回调函数,会将错误信息传给 reject 函数
+      console.log("promise")
+      resolve("success")    // 成功
+      reject("error")   // 失败
+    })
+
+    pro.then((res)=>{
+      // resolve 成功的回调 
+      console.log(res)
+    },(err) => {
+      // reject 失败的回调
+      console.log(err)
+    })
+  </script>
+</body>
+</html>

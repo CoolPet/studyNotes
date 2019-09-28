@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>1.constructor</title>
+</head>
+<body>
+  <script>
+    function fn(e){
+      this.y = e
+    }
+    // 在原型增加方法
+    fn.prototype.getX = function(){}
+    let f = new fn(10)
+    console.log(f)    // fn {y: 10}
+
+    // ES6: 类,必须使用 new 执行,不可以作为普通函数执行
+    class Fn{
+      // 类本身的函数
+      constructor(e){
+        // this:当前实例
+        this.x = e   // 增加私有属性
+        // return 的是基本数据类型对实例没有影响,如果是引用数据类型,会改变实例
+      }
+    }
+    let a = new Fn(10)
+    console.log(a)    // Fn {x: 10}
+    console.log(typeof Fn)    // function,数据类型仍然是函数
+  </script>
+</body>
+</html>

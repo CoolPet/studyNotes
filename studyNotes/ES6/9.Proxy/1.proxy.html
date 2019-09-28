@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>1.proxy</title>
+</head>
+<body>
+  <script>
+    // 对对象默认操作的拦截/改写
+    // new Proxy({目标对象 target}, {拦截的方法})
+    let obj = {name: "Jack", age: 10}
+    // 让 proxy1 代理 obj,需要通过 proxy1 去操作代理的 obj
+    let proxy1 = new Proxy(obj, {
+      get(target, key, proxy){
+        // target:目标对象
+        // key:属性名
+        // proxy:当前 Proxy 实例
+        console.log(target)   // {name: "Jack", age: 10}
+        console.log(key)    // name
+        console.log(proxy)    // Proxy {name: "Jack", age: 10}
+        console.log("get 拦截")   // get 拦截
+        console.log(target[key])    // Jack
+        // 这里 return 什么,获取的就是什么
+        return "你好"
+      }
+    })
+    // get() 方法:只要是获取数据,就会触发 get
+    console.log(proxy1.name)    // 你好
+  </script>
+</body>
+</html>

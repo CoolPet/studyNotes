@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>1.数组的解构赋值</title>
+</head>
+<body>
+  
+</body>
+<script>
+  let arr = [1, 2, 3, 4]
+  // let a = arr[0]
+  // let b = arr[1]
+  // let c = arr[2]
+  // let d = arr[3]
+  let [a, b, c, d] = arr
+  console.log(a, b, c, d)   // 1 2 3 4
+  // 设置默认值
+  // 只有后面解构的值是 undefined 的时候才会走默认值
+  let [x, y = (function(){ return 10 })] = [1, 2]
+  console.log(x, y)   // 1 2
+  // 省略赋值
+  let [,, m2] = [1, 2, 3]
+  console.log(m2)   // 3
+  // 不定参数赋值
+  let [y1, y2, ...y3] = [1, 2, 3, 4, 5]
+  console.log(y1, y2, y3)   // 1 2 [3, 4, 5]
+</script>
+</html>

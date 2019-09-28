@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>4.块级作用域</title>
+</head>
+<body>
+  
+</body>
+<script>
+  // {}:一个 {} 就是一个块级作用域
+  // 在块级作用域下,var 和 function 声明的变量依然是全局的
+  // 在块级作用域下,let 和 const 声明的变量是私有的
+  // {} 如果想表示一个对象不可以放在行首,否则会被看作成块级作用域
+  {
+    var a = 0
+    function getA(){
+      return 1
+    }
+    let b = 1
+  }
+  console.log(a)    // 0
+  console.log(getA())   // 1
+  // console.log(b)    // b is not defined(b 找不到)
+  // if 函数中的 function 只会提前声明不会定义,当条件成立时,先给函数赋值,代码再执行
+</script>
+</html>

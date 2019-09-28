@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>4.箭头函数</title>
+</head>
+<body>
+  <script>
+    // ES5 函数的写法
+    // function fn(形参){函数体}
+    // 箭头函数都是匿名函数
+    // let fn = (形参) => {函数体}
+    // 形参只有一个的时候,可以省略 ()
+    // 假如函数体只有一行代码,可以省略 {} 和 return
+    // let fn = x => x+1
+    // 通常函数当做参数的时候,使用箭头函数
+    let arr = [1, 2, 3]
+    console.log(arr.filter(item => typeof item === "number"))   // [1, 2, 3]
+    // 注意:箭头函数的特点
+    // 1.箭头函数没有 this 指向,里面的 this 是上一级作用域下的 this
+    let obj = {
+      fn(){
+        let f = () => {
+          console.log(this)   // {fn: ƒ},这个 this 是 fn() 的 this 指向,而 fn() 的 this 指向是 obj,所以这里的 this 指向是 obj
+        }
+        f()
+      }
+    }
+    obj.fn()
+    
+    // 2.箭头函数没有 arguments
+    let fn1 = () => {
+      // console.log(arguments)    // arguments is not defined
+    }
+    fn1()
+
+    // 3.箭头函数不可以用作构造函数,因为不可以使用 new 执行
+    let F = () => {}
+    // console.log(new F)    // F is not a constructor
+  </script>
+</body>
+</html>

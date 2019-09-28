@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>3.数组空位</title>
+</head>
+<body>
+  <script>
+    // 数组的空位:数组的某个索引位置没有任何值, undefined 不是空位
+    // 判断一个数组中某一个位置是不是空位,可以用 in 方法
+    // in 方法:判断数组索引位置上有没有值
+    let arr = [, , , , , undefined] 
+    console.log(arr.length)   // 6
+    console.log(1 in arr)   // false,空位
+    console.log(5 in arr)   // true,不是空位
+
+    // 在 ES5 中数组方法对空位的处理不一致,一般会直接跳过空位
+    // 在 ES6 中数组方法将空位处理为 undefined
+    // ES5 中的方法
+    let arr1 = [1, 2, , , , 3]
+    arr1.filter((item) => {
+      console.log(item)   // 只打印 3 次,将空位跳了过去
+    })
+    for(let i in arr1){
+      console.log(i)    // 只打印 3 次,但是将空位的索引留了出来 0 1 5
+    }
+    // ES6 中的方法
+    arr1.find((item) => {
+      console.log(item)   // 打印了 6 次,空位打印为 undefined
+    })
+    for(let i of arr1){
+      console.log(i)    // 打印了 6 次,空位打印为 undefined
+    }
+  </script>
+</body>
+</html>

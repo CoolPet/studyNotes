@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>3.对象的set和get</title>
+</head>
+<body>
+  <script>
+    let obj = {
+      _name: "Jack",
+      get name(){
+        // 只要通过 obj 获取 name 属性就会触发这个 get 函数
+        // 可以通过 return 返回值
+        return this._name
+      },
+      set name(val){
+        // 只要通过 obj 给 name 属性设置值就会触发这个 set 函数
+        // val: 设置的值
+        this._name = val
+      }
+    }
+    console.log(obj.name)   // Jack
+    obj.name = "Tom"
+    console.log(obj.name)   // Tom
+  </script>
+</body>
+</html>

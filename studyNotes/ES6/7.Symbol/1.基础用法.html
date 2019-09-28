@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>1.基础用法</title>
+</head>
+<body>
+  <script>
+    // Symbol 是一个新的基本数据类型,而且是一个值类型
+    // 使用 Symbol 函数执行得到一个 Symbol 数据类型
+    // Symbol 跟字符串差不多,但是使用 Symbol 函数得到的数据每一个都是完全不同的
+    // Symbol 可以接收一个参数,这个参数是对 Symbol 数据的描述
+    // 即使描述一样,但是值也是不同的
+    // Symbol 一般当做对象的属性,任意一个 Symbol() 得到的值都是不同的
+    let sym = Symbol()
+    let sym1 = Symbol()
+    console.log(typeof sym)   // symbol
+    console.log(sym)    // Symbol()
+    console.log(sym1)   // Symbol()
+    console.log(sym == sym1)    // false
+    let obj = {
+      sym: "Tom",
+      [sym]: "Jack"
+    }
+    console.log(obj)    // {sym: "Tom", Symbol(): "Jack"}
+    obj[sym1] = "Jack"
+    console.log(obj)    // {sym: "Tom", Symbol(): "Jack", Symbol(): "Jack"}
+
+    // Symbol 值不可以和其他值进行计算
+    // Symbol 值是不可以转换为数字的
+    // Symbol 值也是不可以转换为字符串的
+    // console.log(Symbol(1) + 1)    // Cannot convert a Symbol value to a number(无法将符号值转换为数字)
+    // console.log(Number(Symbol(1)))    // Cannot convert a Symbol value to a number
+    // console.log(Symbol(1) + "1")    // Cannot convert a Symbol value to a string(无法将符号值转换为字符串)
+    // 但是 Symbol 可以转换为布尔值
+    console.log(!Symbol(1))   // false
+    // Symbol 可以调用 toString 方法,变成显示字符串
+    console.log(Symbol("1").toString())   // Symbol(1)
+
+    // Symbol.for() 方法:如果之前有相同参数的 Symbol 的值,找到这个值返回,如果没有就创建一个新的 Symbol 值
+    // 使用 Symbol.for() 方法,如果参数相同,值就是相同的
+    let zf1 = Symbol.for("Jack")
+    let zf2 = Symbol.for("Jack")
+    console.log(zf1)    // Symbol(Jack)
+    console.log(zf2)    // Symbol(Jack)
+    console.log(zf1 == zf2)   // true
+
+    // Symbol.keyFor(symbol 值):只能找到使用 Symbol.for() 方法创建的值的描述
+    // 如果使用的是 Symbol 创建的是获取不到的
+    console.log(Symbol.keyFor(zf1))   // Jack
+  </script>
+</body>
+</html>

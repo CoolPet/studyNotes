@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>5.race</title>
+</head>
+<body>
+  <script>
+    // Promise.race([每一项都是 Promise 对象,如果不是默认转为 Promise 对象])
+    // 只要有一个状态改变,当前实例的状态就跟着改变
+    let p1 = new Promise((resolve, reject) => {
+      resolve("Jack")
+    })
+    let p2 = new Promise((resolve, reject) => {
+      resolve("Tom")
+    })
+    let p3 = new Promise((resolve, reject) => {
+      resolve("Rose")
+    })
+    Promise.race([p1, p2, p3]).then((res) => {
+      console.log(res)
+    }).catch((err) => {
+      console.log(err)
+    })
+  </script>
+</body>
+</html>
