@@ -1,28 +1,20 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
+  <div>
+    <!-- <header></header> -->
+    1111
   </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld'
+<script type="text/ecmascript-6">
+  // import Header from "./components/header/header.vue"
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  // export default {
+  //   components: {
+  //     Header
+  //   }
+  // }
+
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="stylus" rel="stylesheet/stylus">
 </style>
