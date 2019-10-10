@@ -82,6 +82,9 @@ li {
 
 html, body {
     width: 100%;
+    line-height: 1;
+    font-weight: 200;
+    font-family: "PingFang SC", "STHeitiSC-Light", "Helvetica-Light", arial, sans-serif
 }
 
 body {
