@@ -30,38 +30,40 @@
     <div class="backgroud">
       <img :src="seller.avatar">
     </div>
-    <div v-show="detailShow" class="detail">
-      <div class="detail-wrapper clearfix">
-        <div class="detail-main">
-          <h1 class="detail-name">{{seller.name}}</h1>
-          <div class="star-wrapper">
-            <star :size="48" :score="seller.score"/>
-          </div>
-          <div class="detail-title">
-            <div class="detail-line"></div>
-            <div class="detail-text">优惠信息</div>
-            <div class="detail-line"></div>
-          </div>
-          <ul v-if="seller.supports" class="detail-supports">
-            <li class="support-item" v-for="(item, index) in seller.supports" :key="index">
-              <span class="detail-icon" :class="classMap[item.type]"></span>
-              <span class="support-text">{{item.description}}</span>
-            </li>
-          </ul>
-          <div class="detail-title">
-            <div class="detail-line"></div>
-            <div class="detail-text">商家公告</div>
-            <div class="detail-line"></div>
-          </div>
-          <div class="bulletin">
-            <p class="bulletin-content">{{seller.bulletin}}</p>
+    <transition name="fade">
+      <div v-show="detailShow" class="detail">
+        <div class="detail-wrapper clearfix">
+          <div class="detail-main">
+            <h1 class="detail-name">{{seller.name}}</h1>
+            <div class="star-wrapper">
+              <star :size="48" :score="seller.score"/>
+            </div>
+            <div class="detail-title">
+              <div class="detail-line"></div>
+              <div class="detail-text">优惠信息</div>
+              <div class="detail-line"></div>
+            </div>
+            <ul v-if="seller.supports" class="detail-supports">
+              <li class="support-item" v-for="(item, index) in seller.supports" :key="index">
+                <span class="detail-icon" :class="classMap[item.type]"></span>
+                <span class="support-text">{{item.description}}</span>
+              </li>
+            </ul>
+            <div class="detail-title">
+              <div class="detail-line"></div>
+              <div class="detail-text">商家公告</div>
+              <div class="detail-line"></div>
+            </div>
+            <div class="bulletin">
+              <p class="bulletin-content">{{seller.bulletin}}</p>
+            </div>
           </div>
         </div>
+        <div class="detail-close">
+          <i class="icon-close" @click="closeDetail"></i>
+        </div>
       </div>
-      <div class="detail-close">
-        <i class="icon-close" @click="closeDetail"></i>
-      </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -251,7 +253,15 @@
   width: 100%;
   height: 100vh;
   overflow: auto;
+  transition: all .5s;
   background-color: rgba(7, 17, 27, .8);
+  backdrop-filter: blur(10px);
+}
+.fade-transiton{
+  opacity: 1;
+}
+.fade-enter, .fade-leave-to{
+  opacity: 0;
 }
 .clearfix{
   display: inline-block;
