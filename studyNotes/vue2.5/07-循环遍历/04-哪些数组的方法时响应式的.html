@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>哪些数组的方法时响应式的</title>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="item in letters">{{item}}</li>
+        </ul>
+        <button @click="pushClick">push 方法</button>
+        <button @click="popClick">pop 方法</button>
+        <button @click="shiftClick">shift 方法</button>
+        <button @click="unshiftClick">unshift 方法</button>
+        <button @click="spliceClick">splice 方法</button>
+        <button @click="sortClick">sort 方法</button>
+        <button @click="reverseClick">reverse 方法</button>
+        <button @click="setClick">Vue 的 set 方法</button>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data(){
+                return{
+                    letters: ['A', 'B', 'C', 'D', 'E']
+                }
+            },
+            methods:{
+                // 1.push方法(响应式):可向数组的末尾添加一个或多个元素
+                pushClick(){
+                    this.letters.push('1')
+                },
+                // 2.pop方法(响应式):删除数组的最后一个元素
+                popClick(){
+                    this.letters.pop()
+                },
+                // 3.shift方法(响应式):删除数组的第一个元素
+                shiftClick(){
+                    this.letters.shift()
+                },
+                // 4.unshift方法(响应式):向数组的开头添加一个或更多元素
+                unshiftClick(){
+                    this.letters.unshift('4')
+                },
+                // 5.splice方法(响应式):删除元素/插入元素/替换元素
+                spliceClick(){
+                    // 删除元素:第二个参数传入要删除几个元素,0 或不传就是是后面全删除
+                    // this.letters.splice(2,2)
+                    // 替换元素:第二个参数,表示要替换几个元素,后面是用于替换前面的元素
+                    // this.letters.splice(2, 1, '5')
+                    // 插入元素:第二参数传入 0,后面跟上要插入的元素即可
+                    this.letters.splice(2, 0, '5')
+                },
+                // 6.sort方法(响应式):对数组的元素进行排序
+                sortClick(){
+                    this.letters.sort()
+                },
+                // 7.reverse方法(响应式):颠倒数组中元素的顺序
+                reverseClick(){
+                    this.letters.reverse()
+                },
+                // 8.Vue 的 set 方法(响应式):可以修改指定的值
+                setClick(){
+                    // set(要修改的对象, 索引值, 修改后的值)
+                    Vue.set(this.letters, 0, '8')
+                }
+            }
+        })
+    </script>
+</body>
+</html>

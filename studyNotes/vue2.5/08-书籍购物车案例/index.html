@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>书籍购物车案例</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div id="app">
+        <div v-if="!isShow">
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>书籍名称</th>
+                        <th>出版日期</th>
+                        <th>价格</th>
+                        <th>购买数量</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item, index) in booksList" :key="item.id">
+                        <td>{{item.id}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.date}}</td>
+                        <td>{{item.price | showPrice}}</td>
+                        <td>
+                            <button @click="minus(index)" :disabled="item.num <= 1">-</button>
+                            {{item.num}}
+                            <button @click="add(index)">+</button>
+                        </td>
+                        <td>
+                            <button @click="remove(index)">移除</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>总价:{{total | showPrice}}</div>
+        </div>
+        <h2 v-else>购物车为空</h2>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data(){
+                return{
+                    isShow: false,
+                    booksList:[
+                        {
+                            id: 1,
+                            name: "《算法导论》",
+                            date: "2006-9",
+                            price: 85,
+                            num: 1
+                        },{
+                            id: 2,
+                            name: "《UNIX编程艺术》",
+                            date: "2006-2",
+                            price: 59,
+                            num: 1
+                        },{
+                            id: 3,
+                            name: "《编程珠玑》",
+                            date: "2008-10",
+                            price: 39,
+                            num: 1
+                        },{
+                            id: 4,
+                            name: "《代码大全》",
+                            date: "2006-3",
+                            price: 128,
+                            num: 1
+                        }
+                    ]
+                }
+            },
+            computed:{
+                total(){
+                    // 普通 for 循环的写法
+                    // let total = 0
+                    // for(let i = 0; i < this.booksList.length; i++){
+                    //     total += this.booksList[i].price * this.booksList[i].num
+                    // }
+                    // return total
+
+                    // reduce 高阶函数的写法
+                    return this.booksList.reduce(function(preValue, book){
+                        return preValue + book.price * book.num
+                    },0)
+                }
+            },
+            methods:{
+                add(e){
+                    this.booksList[e].num++
+                },
+                minus(e){
+                    this.booksList[e].num--
+                },
+                remove(e){
+                    this.booksList.splice(e, 1)
+                    if(this.booksList == ""){
+                        this.isShow = true
+                    }
+                },
+                // 价格显示的方法
+                getPrice(price){
+                    return "￥" + price.toFixed(2)
+                }
+            },
+            filters:{
+                // 显示价格的过滤器
+                showPrice(price){
+                    return "￥" + price.toFixed(2)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

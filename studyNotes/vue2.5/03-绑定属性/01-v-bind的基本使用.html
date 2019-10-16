@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-bind的基本使用</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 在 src 和 href 绑定时,不可以使用 Mustache 语法,只能使用 v-bind 动态绑定数值 -->
+        <img :src=url alt="">
+        <a :href=adr>百度一下</a>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data(){
+                return{
+                    url: 'http://pic41.nipic.com/20140508/18609517_112216473140_2.jpg',
+                    adr: 'http://www.baidu.com'
+                }
+            }
+        })
+    </script>
+</body>
+</html>

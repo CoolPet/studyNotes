@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-on的修饰符</title>
+</head>
+<body>
+    <div id="app">
+        <!-- .stop 修饰符的使用 -->
+        <div @click="divClick">
+            <h2>内容</h2>
+            <button @click.stop="btnClick">按钮</button>
+        </div>
+
+        <!-- .prevent 修饰符的使用 -->
+        <form action="http://www.baidu.com">
+            <input type="submit" value="提交" @click.prevent="submitClick">
+        </form>
+
+        <!-- 监听某个键盘的键帽的点击 -->
+        <input type="text" @keyup.enter="keyUp" placeholder="键别名">
+        <input type="text" @keyup.13="keyUp" placeholder="键代码">
+
+        <!-- .once 修饰符的使用 -->
+        <button @click.once="btnOnce">只能点击一次</button>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data(){
+                return{
+
+                }
+            },
+            methods:{
+                btnClick(){
+                    console.log("btnClick")
+                },
+                divClick(){
+                    console.log("divClick")
+                },
+                submitClick(){
+                    console.log("submitClick")
+                },
+                keyUp(){
+                    console.log("keyUp")
+                },
+                btnOnce(){
+                    console.log("btnOnce")
+                }
+            }
+        })
+    </script>
+</body>
+</html>

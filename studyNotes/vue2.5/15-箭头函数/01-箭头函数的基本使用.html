@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>箭头函数的基本使用</title>
+</head>
+<body>
+    <script>
+        // 箭头函数:也是一种定义函数的方式
+        // 1.定义函数的方式:function
+        const aaa = function(){
+            console.log("function 定义函数")
+        }
+
+        // 2.对象字面量中定义函数
+        const obj = {
+            bbb(){
+                console.log("对象字面量定义函数")
+            }
+        }
+
+        // 3.ES6 中的箭头函数
+        const ccc = () =>{
+            console.log("箭头函数")
+        }
+
+        aaa()
+        obj.bbb()
+        ccc()
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-model结合select类型</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 1.选择一个 -->
+        <select name="fruits" id="" v-model="mySelect">
+            <option value="苹果">苹果</option>
+            <option value="香蕉">香蕉</option>
+            <option value="橘子">橘子</option>
+        </select>
+        <h2>你最喜欢的水果是:{{mySelect}}</h2>
+
+        <!-- 2.选择多个 -->
+        <select name="fruits" id="" v-model="mySelects" multiple>
+            <option value="苹果">苹果</option>
+            <option value="香蕉">香蕉</option>
+            <option value="橘子">橘子</option>
+        </select>
+        <h2>你最喜欢的水果是:{{mySelects}}</h2>
+
+        <!-- 值绑定 -->
+        <label v-for="item in ball" :for="item">
+            <input type="checkbox" :id="item" :value="item" v-model="ballList">{{item}}
+        </label>
+        <h2>你最喜欢玩的球是:{{ballList}}</h2>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data(){
+                return{
+                    mySelect: "苹果",
+                    mySelects: [],
+                    ball: ["篮球", "足球", "乒乓球", "羽毛球", "台球", "高尔夫球", "橄榄球", "冰球"],
+                    ballList: []
+                }
+            }
+        })
+    </script>
+</body>
+</html>

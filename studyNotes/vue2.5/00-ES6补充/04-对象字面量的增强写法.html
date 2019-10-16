@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>对象字面量的增强写法</title>
+</head>
+<body>
+    <script>
+        // 1.属性的增强写法
+        // const name = "why"
+        // const age = 18
+        // const height = 1.88
+
+        // ES5 写法
+        // const obj = {
+        //     name: name,
+        //     age: age,
+        //     height: height
+        // }
+        // console.log(obj)
+
+        // ES6 写法
+        // const obj = {
+        //     name, age, height
+        // }
+        // console.log(obj)
+
+        // 2.函数的增强写法
+        // ES5 写法
+        // const obj = {
+        //     run: function(){
+        //         console.log("我是一个函数")
+        //     }
+        // }
+        // obj.run()
+
+        // ES6 写法
+        const obj = {
+            run(){
+                console.log("我是一个函数")
+            }
+        }
+        obj.run()
+    </script>
+</body>
+</html>

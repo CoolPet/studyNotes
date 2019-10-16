@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>父子组件通信-计数器</title>
+</head>
+<body>
+    <div id="app">
+        <h2>{{count}}</h2>
+        <cpn :child="count" @add-click="add" @minus-click="minus"></cpn>
+    </div>
+    <template id="cpn">
+        <div>
+            <button @click="add">+</button>
+            <button @click="minus">-</button>
+        </div>
+    </template>
+    <script src="./js/vue.js"></script>
+    <script>
+        const cpn = {
+            template: "#cpn",
+            data(){
+                return{
+                    childCount: this.child
+                }
+            },
+            props:["child"],
+            methods:{
+                add(){
+                    var e = this.childCount++
+                    this.$emit("add-click", e)
+                },
+                minus(){
+                    var e = this.childCount--
+                    this.$emit("minus-click", e)
+                }
+            }
+        }
+
+        const vm = new Vue({
+            el: "#app",
+            data(){
+                return{
+                    count: 0
+                }
+            },
+            components:{
+                cpn
+            },
+            methods:{
+                add(e){
+                    this.count = e
+                },
+                minus(e){
+                    this.count = e
+                }
+            }
+        })
+    </script>
+</body>
+</html>

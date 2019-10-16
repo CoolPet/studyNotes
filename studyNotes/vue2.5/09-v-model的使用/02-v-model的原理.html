@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-model的原理</title>
+</head>
+<body>
+    <div id="app">
+        <!-- v-model 的使用 -->
+        <input type="text" v-model=message>
+        <h2>{{message}}</h2>
+
+        <!-- v-model 的原理方法实现 -->
+        <!-- 方法一 -->
+        <input type="text" :value="message" @input="valueChange">
+        <h2>{{message}}</h2>
+        <!-- 方法二 -->
+        <input type="text" :value="message" @input="message = $event.target.value">
+        <h2>{{message}}</h2>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data(){
+                return{
+                    message: '你好呀'
+                }
+            },
+            methods:{
+                valueChange(event){
+                    this.message = event.target.value
+                }
+            }
+        })
+    </script>
+</body>
+</html>

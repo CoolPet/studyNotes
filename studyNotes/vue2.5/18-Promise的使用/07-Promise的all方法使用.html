@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Promise的all方法使用</title>
+</head>
+<body>
+  <script>
+    Promise.all([
+      new Promise((resolve, reject) => {
+        resolve("Hello")
+      }),
+      new Promise((resolve, reject) => {
+        resolve("World")
+      })
+    ]).then(results => {
+      console.log(results[0] + " " + results[1])
+    })
+
+    Promise.all([
+      new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve("Hello")
+        },1000)
+      }),
+      new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve("Vuejs")
+        },3000)
+      })
+    ]).then(results => {
+      console.log(results[0] + " " + results[1])
+    })
+  </script>
+</body>
+</html>

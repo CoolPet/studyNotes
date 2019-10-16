@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>作用域插槽的案例</title>
+</head>
+<body>
+    <div id="app">
+        <cpn></cpn>
+        <cpn>
+            <!-- 目的是获取子组件中的 pLanguge,2.5以下版本必须使用 template,2.5以上没有要求 -->
+            <template slot-scope="slot">
+                <span v-for="item in slot.data">{{item}}-</span>
+            </template>
+        </cpn>
+        <cpn>
+            <div slot-scope="slot">
+                <span v-for="item in slot.data">{{item}}-</span>
+            </div>
+        </cpn>
+        <cpn>
+            <div slot-scope="slot">
+                <span>{{slot.data.join("-")}}</span>
+            </div>
+        </cpn>
+    </div>
+    
+    <template id="cpn">
+        <div>
+            <!-- 这里的 :data 中的 data 可以换成其他名称,在组件调用中使用相对应的名称即可 -->
+            <slot :data="pLanguge">
+                <ul>
+                    <li v-for="item in pLanguge">{{item}}</li>
+                </ul>
+            </slot>
+        </div>
+    </template>
+    
+    <script src="./js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data(){
+                return{
+                    message: "你好",
+                }
+            },
+            components:{
+                cpn:{
+                    template: "#cpn",
+                    data(){
+                        return{
+                            pLanguge: ["JavaScript", "C++", "JAVA", "C#", "Python", "Go", "Swift"]
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

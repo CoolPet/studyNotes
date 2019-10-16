@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HelloVuejs</title>
+</head>
+<body>
+    <div id="app">
+        {{message}}
+    </div>
+    <div id="old"></div>
+    <script src="./js/vue.js"></script>
+    <script>
+        // let(定义变量) const(定义常量)
+        // vue 的编程范式:声明式编程
+        const vm = new Vue({
+            el:'#app',  // 用于挂载要管理的元素
+            data(){   // 定义数据
+                return{
+                    message: 'Hello Vuejs'
+                }
+            }
+        })
+
+        // 原生 js 的做法(编程范式:命令式编程)
+        // 1.创建 div 元素,设置 id 属性
+        // 2.定义一个变量 message
+        // 3.将 message 变量放在前面的 div 元素中显示
+        window.onload = function(){
+            var msg = "Hello 原生js"
+            var div = document.getElementById('old')
+            div.innerHTML = msg
+        }
+    </script>
+</body>
+</html>

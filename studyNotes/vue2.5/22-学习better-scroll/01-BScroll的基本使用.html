@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>01-BScroll的基本使用</title>
+  <style>
+    .wrapper{
+      height: 200px;
+      background-color: red;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <ul class="content">
+      <li>基本滚动1</li>
+      <li>基本滚动2</li>
+      <li>基本滚动3</li>
+      <li>基本滚动4</li>
+      <li>基本滚动5</li>
+      <li>基本滚动6</li>
+      <li>基本滚动7</li>
+      <li>基本滚动8</li>
+      <li>基本滚动9</li>
+      <li>基本滚动10</li>
+      <li>基本滚动11</li>
+      <li>基本滚动12</li>
+      <li>基本滚动13</li>
+      <li>基本滚动14</li>
+      <li>基本滚动15</li>
+      <li>基本滚动16</li>
+      <li>基本滚动17</li>
+      <li>基本滚动18</li>
+      <li>基本滚动19</li>
+      <li>基本滚动20</li>
+      <li>基本滚动21</li>
+      <li>基本滚动22</li>
+      <li>基本滚动23</li>
+      <li>基本滚动24</li>
+      <li>基本滚动25</li>
+      <li>基本滚动26</li>
+      <li>基本滚动27</li>
+      <li>基本滚动28</li>
+      <li>基本滚动29</li>
+      <li>基本滚动30</li>
+      <li>基本滚动31</li>
+      <li>基本滚动32</li>
+      <li>基本滚动33</li>
+      <li>基本滚动34</li>
+      <li>基本滚动35</li>
+      <li>基本滚动36</li>
+      <li>基本滚动37</li>
+      <li>基本滚动38</li>
+      <li>基本滚动39</li>
+      <li>基本滚动40</li>
+      <li>基本滚动41</li>
+      <li>基本滚动42</li>
+      <li>基本滚动43</li>
+      <li>基本滚动44</li>
+      <li>基本滚动45</li>
+      <li>基本滚动46</li>
+      <li>基本滚动47</li>
+      <li>基本滚动48</li>
+      <li>基本滚动49</li>
+      <li>基本滚动50</li>
+      <li>基本滚动51</li>
+      <li>基本滚动52</li>
+      <li>基本滚动53</li>
+      <li>基本滚动54</li>
+      <li>基本滚动55</li>
+      <li>基本滚动56</li>
+      <li>基本滚动57</li>
+      <li>基本滚动58</li>
+      <li>基本滚动59</li>
+      <li>基本滚动60</li>
+      <li>基本滚动61</li>
+      <li>基本滚动62</li>
+      <li>基本滚动63</li>
+      <li>基本滚动64</li>
+      <li>基本滚动65</li>
+      <li>基本滚动66</li>
+      <li>基本滚动67</li>
+      <li>基本滚动68</li>
+      <li>基本滚动69</li>
+      <li>基本滚动70</li>
+      <li>基本滚动71</li>
+      <li>基本滚动72</li>
+      <li>基本滚动73</li>
+      <li>基本滚动74</li>
+      <li>基本滚动75</li>
+      <li>基本滚动76</li>
+      <li>基本滚动77</li>
+      <li>基本滚动78</li>
+      <li>基本滚动79</li>
+      <li>基本滚动80</li>
+      <li>基本滚动81</li>
+      <li>基本滚动82</li>
+      <li>基本滚动83</li>
+      <li>基本滚动84</li>
+      <li>基本滚动85</li>
+      <li>基本滚动86</li>
+      <li>基本滚动87</li>
+      <li>基本滚动88</li>
+      <li>基本滚动89</li>
+      <li>基本滚动90</li>
+      <li>基本滚动91</li>
+      <li>基本滚动92</li>
+      <li>基本滚动93</li>
+      <li>基本滚动94</li>
+      <li>基本滚动95</li>
+      <li>基本滚动96</li>
+      <li>基本滚动97</li>
+      <li>基本滚动98</li>
+      <li>基本滚动99</li>
+      <li>基本滚动100</li>
+    </ul>
+  </div>
+  <script src="./bscroll.js"></script>
+  <script>
+    // 默认情况下 BScroll 是不可以实时的监听滚动位置的
+    // probeType 侦测用户滚动的位置,默认为 0(不侦测),1(明确表示不侦测)
+    // 2(侦测用户滚动的位置:在手指滚动的过程中侦测,手指离开后的惯性滚动过程中不侦测)
+    // 3(只要是滚动,都侦测)
+    const bscroll = new BScroll(".wrapper",{
+      probeType: 2,
+      pullUpLoad: true
+    })
+    
+    bscroll.on("scroll", (position) => {
+      // console.log(position)
+    })
+    
+    bscroll.on("pullingUp", () => {
+      console.log("上拉加载更多")
+      // pullingUp 为上拉加载,但是需要在当次上拉加载结束后调用 finishPullUp
+      bscroll.finishPullUp()
+    })
+  </script>
+</body>
+</html>

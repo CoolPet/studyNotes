@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue列表展示</title>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <li v-for='(item,index) in list' :key='index'>
+                {{item}}
+            </li>
+        </ul>
+    </div>
+    <ul id="old"></ul>
+    <script src="./js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el:'#app',
+            data(){
+                return{
+                    list:['海王','哪吒','变形金刚']
+                }
+            }
+        })
+
+        window.onload=function(){
+            var arr = ['警察故事','大城小事','魔幻世界']
+            var box = document.getElementById('old')
+            for(var i=0;i<arr.length;i++){
+                box.innerHTML += '<li>' + arr[i] + '</li>';
+            }
+        }
+    </script>
+</body>
+</html>

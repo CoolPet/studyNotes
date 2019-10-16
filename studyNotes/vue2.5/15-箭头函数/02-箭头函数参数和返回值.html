@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>箭头函数参数和返回值</title>
+</head>
+<body>
+    <script>
+        // 1.参数问题
+        // 1.1.放入两个参数
+        const sum = (num1, num2) => {
+            return num1 + num2
+        }
+
+        // 1.2.放入一个参数,括号可以省略
+        const power = num => {
+            return num * num
+        }
+
+        // 2.函数中
+        // 2.1.函数代码中有多行代码时
+        const test = () => {
+            // 1.打印 Hello World
+            console.log("Hello World")
+
+            // 2.打印 Hello Vuejs
+            console.log("Hello Vuejs")
+        }
+
+        // 2.2.函数代码中只有一行代码时,会自动将结果 return 出去
+        const mul = (num1, num2) => num1 * num2
+    </script>
+</body>
+</html>

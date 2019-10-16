@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件访问-父访问子-children和refs</title>
+</head>
+<body>
+    <div id="app">
+        <cpn ref="aaa"></cpn>
+        <button @click="btnClick">按钮</button>
+    </div>
+    <template id="cpn">
+        <div>
+            我是子组件
+        </div>
+    </template>
+    <script src="./js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data(){
+                return{
+                    message: "你好"
+                }
+            },
+            methods:{
+                btnClick(){
+                    // 1.$children
+                    // console.log(this.$children)
+                    // this.$children[0].showMessage()
+
+                    // 2.$refs => 对象类型,默认是一个空的对象,需要在组件上加 ref="标识名"
+                    console.log(this.$refs.aaa)
+                    this.$refs.aaa.showMessage()
+                }
+            },
+            components:{
+                cpn:{
+                    template: "#cpn",
+                    methods:{
+                        showMessage(){
+                            console.log("showMessage")
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

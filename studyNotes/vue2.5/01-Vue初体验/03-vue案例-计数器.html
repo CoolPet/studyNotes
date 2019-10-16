@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue案例-计数器</title>
+    <style>
+        .count{
+            display: flex;
+            width: 100px;
+            justify-content: space-between;
+        }
+        .add,.minus{
+            width: 25px;
+            height: 25px;
+            border: 1px solid #ccc;
+            line-height: 25px;
+            font-size: 20px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .title{
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h4>当前计数:{{counter}}</h4>
+        <div class="count">
+            <div class="add" @click='add()'>+</div>
+            <div class="minus" @click='minus()'>-</div>
+        </div>
+    </div>
+    <div id="old">
+        <h4 class="title">当前计数:<p id="title"></p></h4>
+        <div class="count">
+            <div class="add" onclick='oldAdd()'>+</div>
+            <div class="minus" onclick='oldMinus()'>-</div>
+        </div>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el:'#app',
+            data(){
+                return{
+                    counter:0
+                }
+            },
+            methods:{
+                add(){
+                    this.counter ++ 
+                },
+                minus(){
+                    this.counter --
+                }
+            }
+        })
+
+        window.onload = function(){
+            var num = 0
+            var title = document.getElementById('title')
+            title.innerHTML = num
+        }
+        function oldAdd(){
+            document.getElementById('title').innerText++
+        }
+        function oldMinus(){
+            document.getElementById('title').innerText--
+        }
+    </script>
+</body>
+</html>

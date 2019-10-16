@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-if和v-else-if和v-else的使用</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="num">
+        
+        <!-- 相对于来说复杂的逻辑还是推荐使用计算属性等 -->
+        <h2 v-if="num >= 85">优秀</h2>
+        <h2 v-else-if="num >= 70">良好</h2>
+        <h2 v-else-if="num >= 60">及格</h2>
+        <h2 v-else>不及格</h2>
+        
+        <h2>{{grade}}</h2>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data(){
+                return{
+                    num: 0
+                }
+            },
+            computed:{
+                grade(){
+                    let report = ""
+                    if(this.num >= 85){
+                        report = "优秀"
+                    }else if(this.num >= 70){
+                        report = "良好"
+                    }else if(this.num >= 60){
+                        report = "及格"
+                    }else{
+                        report = "不及格"
+                    }
+                    return report
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-bind动态绑定class(对象语法)</title>
+    <style>
+        .active{
+            color: red;
+        }
+        .line{
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h2 :class=active>{{message}}</h2>
+        <button @click='btnClick'>按钮</button>
+        <!-- <h2 :class='{类名:boolean}'>{{message}}</h2> -->
+        <h2 :class='{active:isActive,line:isLine}'>{{message}}</h2>
+        <h2 :class='getClasses()'>{{message}}</h2>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el:'#app',
+            data(){
+                return{
+                    message:'你好',
+                    active:'active',
+                    isActive:true,
+                    isLine:true
+                }
+            },
+            methods:{
+                btnClick(){
+                    this.isLine = !this.isLine
+                },
+                getClasses(){
+                    return { active: this.isActive,line: this.isLine }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

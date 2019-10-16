@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-if和v-else的使用</title>
+</head>
+<body>
+    <div id="app">
+        <h2 v-if="isShow">
+            true 显示
+        </h2>
+        <h2 v-else>
+            false 隐藏
+        </h2>
+        <button @click="show">显示/隐藏</button>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: "#app",
+            data(){
+                return{
+                    isShow: true
+                }
+            },
+            methods:{
+                show(){
+                    this.isShow = !this.isShow
+                }
+            }
+        })
+    </script>
+</body>
+</html>

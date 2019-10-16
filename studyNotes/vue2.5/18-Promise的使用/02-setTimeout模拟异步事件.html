@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>setTimeout模拟异步事件</title>
+</head>
+<body>
+  <script>
+    // 1.使用 setTimeout
+    // setTimeout(() => {
+    //   console.log("Hello World")
+    // }, 1000)
+    
+    // 参数 -> 函数(resolve, reject)
+    // resolve、reject 本身它们有是函数
+    new Promise((resolve, reject) => {
+      // 第一次请求操作
+      setTimeout(() => {
+        resolve()
+      },1000)
+    }).then(() => {
+      // 第一次拿到处理结果
+      console.log("Hello World")
+
+      // 第二次请求操作
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve()
+        },1000)
+      })
+    }).then(() => {
+    // 第二次拿到处理结果
+      console.log("Hello Vuejs")
+    })
+
+    // 使用 Promise 的情况:在有异步操作时,使用 Promise 对这个异步操作进行封装
+    // new -> 构造函数(1.保存一些状态信息;2.执行传入的函数)
+    // 在执行传入的回调函数时,会传入两个参数:resolve/reject,这两个参数本身又是函数 
+    // 成功时调用 resolve,失败时调用 reject
+  </script>
+</body>
+</html>

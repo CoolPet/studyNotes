@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>slot-插槽的基本使用</title>
+</head>
+<body>
+    <!--
+        1.插槽的基本使用 <slot></slot>
+        2.插槽的默认值 <slot><button></button></slot>
+        3.如果有多个值,同时放入到组件进行替换时,一起作为替换元素
+    -->
+    <div id="app">
+        <cpn><button>按钮</button></cpn>
+        <cpn><span>span标签</span></cpn>
+        <cpn><p>p标签</<p></cpn>
+        <cpn><h2>标题</h2></cpn>
+        <cpn1></cpn1>
+        <cpn1></cpn1>
+        <cpn1><span>标签</span></cpn1>
+        <cpn1></cpn1>
+    </div>
+    <template id="cpn">
+        <div>
+            <h2>我是组件</h2>
+            <p>我是组件,哈哈哈</p>
+            <!-- 如果 slot 标签内没有其他标签,初始为空 -->
+            <slot></slot>
+        </div>
+    </template>
+    <template id="cpn1">
+        <div>
+            <h2>我是组件</h2>
+            <p>我是组件,哈哈哈</p>
+            <!-- 如果 slot 标签内有其他标签,初始为默认值,但是在组件内添加可以将默认值替换 -->
+            <slot>
+                <button>
+                    按钮
+                </button>
+            </slot>
+        </div>
+    </template>
+    <script src="./js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: "#app",
+            data(){
+                return{
+
+                }
+            },
+            components:{
+                cpn:{
+                    template: "#cpn"
+                },
+                cpn1:{
+                    template: "#cpn1"
+                }
+            }
+        })
+    </script>
+</body>
+</html>
