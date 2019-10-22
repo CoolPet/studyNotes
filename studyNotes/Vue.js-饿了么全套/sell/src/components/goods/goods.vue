@@ -2,7 +2,11 @@
   <div class="goods">
     <div class="menu-wrapper" ref="menu">
       <ul>
-        <li v-for="(item, index) in goods" :key="index" class="menu-item">
+        <li v-for="(item, index) in goods" 
+          :key="index" 
+          class="menu-item" 
+          :class="{'current':currentIndex === index}"
+          @click="selectMenu(index)">
           <span class="text">
             <span v-show="item.type > 0" class="icon" :class="classMap[item.type]"></span>
             {{item.name}}
@@ -34,11 +38,13 @@
         </li>
       </ul>
     </div>
+    <shopCart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"/>
   </div>
 </template>
 
 <script>
   import BScroll from "better-scroll"
+  import shopCart from "@/components/shopcart/shopcart"
 
   export default {
     name: "Goods",
@@ -47,6 +53,9 @@
         type: Object,
         default: ""
       }
+    },
+    components: {
+      shopCart
     },
     data(){
       return{
@@ -60,7 +69,7 @@
         for(let i = 0; i< this.listHeight.length; i++){
           let height1 = this.listHeight[i]
           let height2 = this.listHeight[i+1]
-          if(!height2 || (this.scrollY > height1 && this.scrollY < height2)){
+          if(!height2 || (this.scrollY >= height1 && this.scrollY < height2)){
             return i;
           }
         }
@@ -81,9 +90,11 @@
     },
     methods: {
       initScroll(){
-        this.menuScroll = new BScroll(this.$refs.menu, {})
+        this.menuScroll = new BScroll(this.$refs.menu, {
+          click: true
+        })
         this.foodsScroll = new BScroll(this.$refs.foods, {
-          probeType: 2
+          probeType: 3
         }) 
         this.foodsScroll.on("scroll", (pos) => {
           this.scrollY = Math.abs(Math.round(pos.y))
@@ -97,6 +108,16 @@
           height += item.offsetHeight
           this.listHeight.push(height)
         }
+      },
+      selectMenu(e){
+        let foodList = this.$refs.foods.getElementsByClassName("foods-list-hook")
+        let el = foodList[e]
+        // scrollToElement(el, time, offsetX, offsetY, easing):滚动到指定的目标元素
+        // el:滚动到的目标元素,如果是字符串,则内部会尝试调用 querySelector 转换成 DOM 对象
+        // time:滚动动画执行的时长(单位:ms)
+        // offsetX:相对于目标元素的横轴偏移量,如果设置为 true,则滚到目标元素的中心位置
+        // offsetY:相对于目标元素的纵轴偏移量,如果设置为 true,则滚到目标元素的中心位置
+        this.foodsScroll.scrollToElement(el, 300)
       }
     }
   }
@@ -120,7 +141,17 @@
     height: 1.44rem;
     width: 1.49rem;
     line-height: .37rem;
-    margin: auto;
+    padding: 0 .16rem;
+  }
+  .current{
+    position: relative;
+    margin-top: -1px;
+    z-index: 10;
+    background-color: #fff;
+    font-weight: 700;
+  }
+  .current .text {
+    border: none;
   }
   .icon{
     display: inline-block;
