@@ -183,6 +183,9 @@
           return
         }
         alert("支付" + this.totalPrice + "元")
+        this.selectFoods.forEach((item) => {
+          item.count = 0
+        })
       },
       enter(el, done){
         let rf = el.offestHeight

@@ -15,11 +15,13 @@
           <div class="price">
             <span class="now">￥{{food.price}}</span><span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
           </div>
+          <div class="cartcontrol-wrapper">
+            <cartcontrol :food="food" @cartAdd="addCart"></cartcontrol>
+          </div>
+          <transition name="fade">
+            <div class="buy" @click="addFirst" v-show="!food.count || food.count===0">加入购物车</div>
+          </transition>
         </div>
-        <div class="cartcontrol-wrapper">
-          <cartcontrol :food="food"></cartcontrol>
-        </div>
-        <div class="buy" v-show="!food.count || food.count===0">加入购物车</div>
       </div>
     </div>
   </transition>
@@ -58,6 +60,13 @@
             }
           })
         }
+      },
+      addFirst(){
+        this.$emit("cartAdd", event.target)
+        this.$set(this.food, 'count', 1)
+      },
+      addCart(){
+        this.$emit("cartAdd", event.target)
       }
     }
   }
@@ -98,6 +107,7 @@
   }
   .content{
     padding: .48rem;
+    position: relative;
   }
   .title{
     font-size: .373rem;
@@ -126,5 +136,31 @@
     text-decoration: line-through;
     font-size: .267rem;
     color: rgb(147, 153, 159);
+  }
+  .cartcontrol-wrapper{
+    position: absolute;
+    right: .32rem;
+    bottom: .32rem;
+  }
+  .buy{
+    position: absolute;
+    right: .48rem;
+    bottom: .48rem;
+    z-index: 10;
+    height: .64rem;
+    line-height: .64rem;
+    padding: 0 .32rem;
+    box-sizing: border-box;
+    font-size: .267rem;
+    border-radius: .32rem;
+    color: #ffffff;
+    background-color: rgb(0, 160, 220);
+  }
+  .fade-enter-active, .fade-leave-active{
+    transition: all .2s
+  }
+  .fade-enter, .fade-leave-active{
+    opacity: 0;
+    z-index: -1;
   }
 </style>
