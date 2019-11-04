@@ -1,0 +1,4 @@
+<view class="content">
+  <image class="img" src="../../image/login/login.gif" mode="widthFix"></image>
+  <button class="getUser" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">用户登录</button>
+</view>

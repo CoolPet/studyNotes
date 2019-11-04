@@ -1,4 +1,4 @@
-// pages/index/index.js
+// pages/login/login.js
 Page({
 
   /**
@@ -12,7 +12,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    
   },
 
   /**
@@ -27,6 +27,23 @@ Page({
    */
   onShow: function () {
 
+  },
+  onGotUserInfo: function (e) {
+    if(!e.detail.userInfo){
+      wx.showModal({
+        title: '提示',
+        content: '请授权登录',
+        showCancel: false,
+        success(res) {
+
+        }
+      })
+    }else{
+      wx.setStorageSync('userInfo', e.detail.userInfo)
+      wx.switchTab({
+        url: '../home/home',
+      })
+    }
   },
 
   /**

@@ -1,0 +1,6 @@
+<!-- 自定义顶部导航最好使用 px 为单位 -->
+<view class="wrapper" style="padding-top:{{statusBar}}px;height:{{navigationBar}}px;padding-right:{{capsuleWidth}}px;">
+  <view style="width:{{capsuleWidth}}px">
+    {{address}}
+  </view>
+</view>

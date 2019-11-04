@@ -1,12 +1,21 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/home/home",
+    "pages/playFun/playFun",
+    "pages/issue/issue",
+    "pages/product/product",
+    "pages/personage/personage",
+    "pages/login/login",
+    "component/navbar/navbar",
+    "component/tabbar/tabbar"
   ],
   "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
+    "navigationStyle": "custom"
   },
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  }
 }

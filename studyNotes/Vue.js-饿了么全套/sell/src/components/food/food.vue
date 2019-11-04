@@ -1,26 +1,41 @@
 <template>
   <transition name="move">
     <div class="food" v-show="showFlag" ref="food">
-      <div class="food-content">
-        <img :src=food.image alt="" class="image-header">
-        <div class="back" @click="show">
-          <i class="icon-arrow_lift"></i>
+      <div>
+        <div class="food-content">
+          <img :src=food.image alt="" class="image-header">
+          <div class="back" @click="show">
+            <i class="icon-arrow_lift"></i>
+          </div>
+          <div class="content">
+            <h1 class="title">{{food.name}}</h1>
+            <div class="detail">
+              <span class="sell-count">月售{{food.sellCount}}</span>
+              <span class="rating">好评率{{food.rating}}%</span>
+            </div>
+            <div class="price">
+              <span class="now">￥{{food.price}}</span><span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
+            </div>
+            <div class="cartcontrol-wrapper">
+              <cartcontrol :food="food" @cartAdd="addCart"></cartcontrol>
+            </div>
+            <transition name="fade">
+              <div class="buy" @click="addFirst" v-show="!food.count || food.count===0">加入购物车</div>
+            </transition>
+          </div>
         </div>
-        <div class="content">
-          <h1 class="title">{{food.name}}</h1>
-          <div class="detail">
-            <span class="sell-count">月售{{food.sellCount}}</span>
-            <span class="rating">好评率{{food.rating}}%</span>
-          </div>
-          <div class="price">
-            <span class="now">￥{{food.price}}</span><span class="old" v-show="food.oldPrice">￥{{food.oldPrice}}</span>
-          </div>
-          <div class="cartcontrol-wrapper">
-            <cartcontrol :food="food" @cartAdd="addCart"></cartcontrol>
-          </div>
-          <transition name="fade">
-            <div class="buy" @click="addFirst" v-show="!food.count || food.count===0">加入购物车</div>
-          </transition>
+        <split v-show="food.info"/>
+        <div class="info" v-show="food.info">
+          <h1 class="info-title">商品信息</h1>
+          <p class="info-text">{{food.info}}</p>
+        </div>
+        <split />
+        <div class="rating">
+          <h1 class="rating-title">商品评价</h1>
+          <ratingselect :selectType="selectType" 
+            :onlyContent="onlyContent" 
+            :desc="desc" 
+            :ratings="food.ratings"/>
         </div>
       </div>
     </div>
@@ -30,6 +45,15 @@
 <script>
   import BScroll from "better-scroll"
   import cartcontrol from "@/components/cartcontrol/cartcontrol"
+  import split from "@/components/split/split"
+  import ratingselect from "@/components/ratingselect/ratingselect"
+
+  // 好评
+  const POSITIVE = 0
+  // // 差评
+  const NEFATIVE = 1
+  // 全部评论
+  const ALL = 2
 
   export default {
     name: "Food",
@@ -39,16 +63,27 @@
       }
     },
     components: {
-      cartcontrol
+      cartcontrol,
+      split,
+      ratingselect
     },
     data(){
       return{
-        showFlag: false
+        showFlag: false,
+        selectType: ALL,
+        onlyContent: true,
+        desc:{
+          all: "全部",
+          positive: "满意",
+          negative: "吐槽"
+        }
       }
     },
     methods: {
       show(){
         this.showFlag = !this.showFlag
+        this.selectType = ALL
+        this.onlyContent = true
         if(this.showFlag == true){
           this.$nextTick(() => {
             if(!this.scroll){
@@ -162,5 +197,20 @@
   .fade-enter, .fade-leave-active{
     opacity: 0;
     z-index: -1;
+  }
+  .info{
+    padding: .48rem;
+  }
+  .info-title{
+    margin-bottom: .427rem;
+    font-size: .373rem;
+    color: rgb(7, 17, 27);
+    font-weight: 900;
+  }
+  .info-text{
+    padding: 0 .213rem;
+    font-size: .32rem;
+    color: rgb(77, 85, 93);
+    line-height: .64rem;
   }
 </style>
