@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>答题</title>
+  <style>
+    .title{
+      text-align: center;
+    }
+    .options{
+      text-align: center;
+    }
+    .sub{
+      display: flex;
+      justify-content: space-between;
+    }
+    .active{
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1 class="title">{{quiz[question].subject}}</h1>
+    <div class="options" v-for="(item, index) in quiz[question].items">
+      <label>
+        <input type="radio" name="item" v-model="opt" :value=itemsValue[index]>
+        <span>
+          {{itemsValue[index]}}
+        </span>
+        {{item}}
+      </label>
+    </div>
+    <div v-if="question!=0&&!sub" @click="topic">上一题</div>
+    <div v-if="question<quiz.length-1" @click="next">下一题</div>
+    <div v-if="question==quiz.length-1" @click="submit">交卷</div>
+    <div v-if="sub" class="sub">
+      <div>
+        <p>你的答案</p>
+        <p v-for="item in optArr" :class="{'active':item.tf==1}">{{item.opt}}</p>
+      </div>
+      <div>
+        <p>正确答案</p>
+        <p v-for="item in ansArr">{{item}}</p>
+      </div>
+      <div>
+        <p>正确个数</p>
+        <p>{{correctNum}}</p>
+        <p>得分</p>
+        <p>{{score}}</p>
+      </div>
+    </div>
+  </div>
+  <script src="js/vue.js"></script>
+  <script>
+    let vm = new Vue({
+      el: "#app",
+      data () {
+        return {
+          quiz:[
+            {
+              subject: "最长的河?",
+              items: ["亚马逊", "尼罗河", "黄河", "莱茵河"],
+              ans: "A"
+            },{
+              subject: "市值最高的公司?",
+              items: ["中国移动", "阿里巴巴", "可口可乐", "苹果"],
+              ans: "D"
+            },{
+              subject: "最流行的程序设计语言?",
+              items: ["C", "JAVA", "PHP", "Python"],
+              ans: "D"
+            },{
+              subject: "最流行的数据库?",
+              items: ["DB2", "MySQL", "Oracle", "SQL Server"],
+              ans: "B"
+            },{
+              subject: "发明鼠标的时间?",
+              items: ["1968", "1984", "2000", "2004"],
+              ans: "A"
+            }
+          ],
+          // 题号
+          question: 0,
+          // 当前选中的答案
+          opt: '',
+          // 用户选中答案的集合
+          optArr: [],
+          // 交卷后
+          sub:false,
+          // 正确个数
+          correctNum: 0,
+          // 得分
+          score: 0
+        }
+      },
+      computed: {
+        itemsValue(){
+          let arr = []
+          for(let i=0; i< this.quiz[this.question].items.length; i++){
+            arr.push(String.fromCharCode(65+i))
+          }
+          return arr
+        },
+        // 正确选项
+        ansArr(){
+          let arr = []
+          for(let i=0; i< this.quiz.length; i++){
+            arr.push(this.quiz[i].ans)
+          }
+          return arr
+        }
+      },
+      methods:{
+        topic(){
+          this.question--
+          this.opt = this.optArr[this.question].opt
+          this.optArr.pop()
+        },
+        next(){
+          if(this.opt!=""){
+            this.question++
+            this.optArr.push({opt:this.opt, tf:0})
+            this.opt=""
+          }else{
+            alert("请选择答案")
+          }
+        },
+        submit(){
+          if(this.opt!=""){
+            this.optArr.push({opt:this.opt, tf:0})
+            console.log(this.optArr)
+            this.sub=true
+            for(let i=0; i<this.optArr.length; i++){
+              if(this.optArr[i].opt == this.ansArr[i]){
+                this.correctNum = this.correctNum + 1
+              }else{
+                this.optArr[i].tf=1
+              }
+            }
+            this.score = this.correctNum/this.optArr.length*100
+          }else{
+            alert("请选择答案")
+          }
+        }
+      }
+    })
+  </script>
+</body>
+</html>
