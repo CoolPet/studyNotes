@@ -30,12 +30,30 @@
           <p class="info-text">{{food.info}}</p>
         </div>
         <split />
-        <div class="rating">
+        <div class="rating-details">
           <h1 class="rating-title">商品评价</h1>
           <ratingselect :selectType="selectType" 
             :onlyContent="onlyContent" 
             :desc="desc" 
-            :ratings="food.ratings"/>
+            :ratings="food.ratings"
+            @select="select"
+            @toggle="toggle"/>
+          <div class="rating-wrapper">
+            <ul v-show="food.ratings && food.ratings.length">
+              <li v-show="needShow(item.rateType, item.text)" v-for="(item, index) in food.ratings" :key="index" class="rating-item">
+                <div class="rating-user">
+                  <span class="rating-username">{{item.username}}</span>
+                  <img :src=item.avatar class="rating-avatar">
+                </div>
+                <div class="rating-time">{{item.rateTime | formatDate}}</div>
+                <p class="rating-text">
+                  <span :class="{'icon-thumb_up':item.rateType===0, 'icon-thumb_down':item.rateType===1}"></span>
+                  {{item.text}}
+                </p>
+              </li>
+            </ul>
+            <div class="no-rating" v-show="!food.ratings || !food.ratings.length">暂无评价</div>
+          </div>
         </div>
       </div>
     </div>
@@ -47,6 +65,8 @@
   import cartcontrol from "@/components/cartcontrol/cartcontrol"
   import split from "@/components/split/split"
   import ratingselect from "@/components/ratingselect/ratingselect"
+  // 日期的通用方法
+  import {formatDate} from "@/common/js/date"
 
   // 好评
   const POSITIVE = 0
@@ -74,7 +94,7 @@
         onlyContent: true,
         desc:{
           all: "全部",
-          positive: "满意",
+          positive: "推荐",
           negative: "吐槽"
         }
       }
@@ -102,6 +122,34 @@
       },
       addCart(){
         this.$emit("cartAdd", event.target)
+      },
+      needShow(type, text){
+        if(this.onlyContent && !text){
+          return false
+        }
+        if(this.selectType === ALL){
+          return true
+        }else{
+          return type === this.selectType
+        }
+      },
+      select(e){
+        this.selectType = e
+        this.$nextTick(() => {
+          this.scroll.refresh()
+        })
+      },
+      toggle(e){
+        this.onlyContent = e
+        this.$nextTick(() => {
+          this.scroll.refresh()
+        })
+      }
+    },
+    filters: {
+      formatDate(time){
+        let date = new Date(time)
+        return formatDate(date, "yyyy-MM-dd hh:mm")
       }
     }
   }
@@ -212,5 +260,64 @@
     font-size: .32rem;
     color: rgb(77, 85, 93);
     line-height: .64rem;
+  }
+  .rating-details{
+    padding-top: .48rem;
+  }
+  .rating-title{
+    margin-left: .48rem;
+    font-size: .373rem;
+    color: rgb(7, 17, 27)
+  }
+  .rating-wrapper{
+    padding: 0 .48rem;
+  }
+  .rating-item{
+    position: relative;
+    padding: .427rem 0;
+    border-bottom: 1px solid rgba(7, 17, 27, .1);
+  }
+  .rating-user{
+    position: absolute;
+    right: 0;
+    top: .427rem;
+    font-size: 0;
+    display: flex;
+    align-items: center;
+  }
+  .rating-avatar{
+    width: .32rem;
+    height: .32rem;
+    display: block;
+    border-radius: 50%;
+  }
+  .rating-username{
+    font-size: .267rem;
+    color: rgb(147, 153, 159);
+    margin-right: .16rem;
+  }
+  .rating-time{
+    font-size: .267rem;
+    color: rgb(147, 153, 159);
+    margin-bottom: .16rem;
+  }
+  .rating-text{
+    font-size: .32rem;
+    color: rgb(7, 17, 27);
+  }
+  .icon-thumb_up, .icon-thumb_down{
+    margin-right: .107rem;
+    font-size: .32rem;
+  }
+  .icon-thumb_up{
+    color: rgb(0, 160, 220);
+  }
+  .icon-thumb_down{
+    color: rgb(147, 153, 159);
+  }
+  .no-rating{
+    padding: .427rem;
+    font-size: .32rem;
+    color: rgb(147, 153, 159);
   }
 </style>
