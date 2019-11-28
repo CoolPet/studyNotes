@@ -10,4 +10,4 @@
 - React 的开发环境准备
   - 引入 js 文件使用 React
   - 通过脚手架工具来编码
-  - 
+  - create-react-app
