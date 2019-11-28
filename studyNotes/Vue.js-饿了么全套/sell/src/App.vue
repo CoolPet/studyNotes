@@ -20,20 +20,26 @@
 
 <script>
   import Header from "@/components/header/header"
+  import {urlParse} from "@/common/js/util"
 
   export default {
     data(){
       return{
-        seller: {}
+        seller: {
+          id: (() => {
+            let queryParam = urlParse();
+            return queryParam.id;
+          })()
+        }
       }
     },
     components:{
       "v-header": Header
     },
     created(){
-      this.$axios.get("/api/seller").then((res) => {
+      this.$axios.get("/api/seller?id="+this.seller.id).then((res) => {
         if(res.data.errno === 0){
-          this.seller = res.data.seller
+          this.seller = Object.assign({}, this.seller, res.data.seller)
         }
       })
     }

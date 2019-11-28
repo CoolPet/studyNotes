@@ -32,7 +32,7 @@
         @toggle="toggle"/>
       <div class="rating-wrapper">
         <ul>
-          <li v-for="(item, index) in ratings" class="rating-item" :key="index">
+          <li v-for="(item, index) in ratings" v-show="needShow(item.rateType, item.text)" class="rating-item" :key="index">
             <div class="avatar">
               <img :src=item.avatar >
             </div>
@@ -112,6 +112,16 @@
         this.$nextTick(() => {
           this.scroll.refresh()
         })
+      },
+      needShow(type, text){
+        if(this.onlyContent && !text){
+          return false
+        }
+        if(this.selectType === ALL){
+          return true
+        }else{
+          return type === this.selectType
+        }
       }
     },
     filters: {

@@ -1,63 +1,339 @@
 <template>
-    <div class="login_div">
-        <button id="wxsys" v-on:click="sys_click()">扫一扫</button>
+  <div class="seller" ref="seller">
+    <div class="seller-content">
+      <div class="overview">
+        <h1 class="seller-title">{{seller.name}}</h1>
+        <div class="desc">
+          <star :size="36" :score=seller.score />
+          <span class="desc-text">({{seller.ratingCount}})</span>
+          <span class="desc-text">月售{{seller.sellCount}}单</span>
+        </div>
+        <ul class="remark">
+          <li class="remark-block">
+            <h1 class="remark-title">起送价</h1>
+            <div class="remark-content">
+              <span class="remark-stress">{{seller.minPrice}}</span>元
+            </div>
+          </li>
+          <li class="remark-block">
+            <h1 class="remark-title">商家配送</h1>
+            <div class="remark-content">
+              <span class="remark-stress">{{seller.deliveryPrice}}</span>元
+            </div>
+          </li>
+          <li class="remark-block">
+            <h1 class="remark-title">平均配送时间</h1>
+            <div class="remark-content">
+              <span class="remark-stress">{{seller.deliveryTime}}</span>分钟
+            </div>
+          </li>
+        </ul>
+        <div class="favorite" @click="toggle">
+          <span class="icon-favorite" :class="{'active': favorite}"></span>
+          <span class="favorite-text">{{favoriteText}}</span>
+        </div>
+      </div>
+      <split />
+      <div class="bulletin">
+        <h1 class="bulletin-title">公告与活动</h1>
+        <div class="content-wrapper">
+          <p class="bulletin-content">{{seller.bulletin}}</p>
+        </div>
+        <ul v-if="seller.supports" class="detail-supports">
+          <li class="support-item" v-for="(item, index) in seller.supports" :key="index">
+            <span class="detail-icon" :class="classMap[item.type]"></span>
+            <span class="support-text">{{item.description}}</span>
+          </li>
+        </ul>
+      </div>
+      <split />
+      <div class="pics">
+        <h1 class="pics-title">商家实景</h1>
+        <div class="pics-wrapper" ref="picWrapper">
+          <ul class="pics-list" ref="picList">
+            <li class="pics-item" v-for="(item, index) in seller.pics" :key="index">
+              <img class="pics-img" :src=item>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <split />
+      <div class="info">
+        <h1 class="info-title">商家信息</h1>
+        <ul>
+          <li class="info-item" v-for="(item, index) in seller.infos" :key="index">
+            {{item}}
+          </li>
+        </ul>
+      </div>
     </div>
+  </div>
 </template>
 <script>
-    import wx from "weixin-js-sdk"
-    import $ from "jquery"
-    export default {
-        data(){
-            return {
-            }
-        },
-    methods : {
-        sys_click : function()
-        {
-          alert(210321032)
-        //这里【url参数一定是去参的本网址】
-        $.get("获取微信认证参数的地址?url=去参的本网页地址", function(data){
-        var jsondata=$.parseJSON(data);
-            wx.config({
-                // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-                debug: false,
-                // 必填，公众号的唯一标识
-                appId: jsondata.model.appId,
-                // 必填，生成签名的时间戳
-                timestamp: "" + jsondata.model.timestamp,
-                // 必填，生成签名的随机串
-                nonceStr: jsondata.model.nonceStr,
-                // 必填，签名
-                signature: jsondata.model.signature,
-                // 必填，需要使用的JS接口列表，所有JS接口列表
-                jsApiList: ['checkJsApi', 'scanQRCode']
-            });
-        });
-        wx.error(function (res) {
-            alert("出错了：" + res.errMsg);//这个地方的好处就是wx.config配置错误，会弹出窗口哪里错误，然后根据微信文档查询即可。
-        });
- 
-        wx.ready(function () {
-            wx.checkJsApi({
-                jsApiList: ['scanQRCode'],
-                success: function (res) {
- 
-                }
-            });
- 
-                wx.scanQRCode({
-                    needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-                    scanType: ["qrCode"], // 可以指定扫二维码还是一维码，默认二者都有
-                    success: function (res) {
-                        var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-                        alert("扫描结果："+result);
-                        window.location.href = result;//因为我这边是扫描后有个链接，然后跳转到该页面
-                    }
-                });
- 
-        }); 
+  import BScroll from "better-scroll"
+  import star from "@/components/star/star"
+  import split from "@/components/split/split"
+  import {saveToLocal, loadFromLocal} from "@/common/js/store"
+  import {formatDate} from "@/common/js/date"
+
+  export default {
+    name: "Seller",
+    data () {
+      return {
+        favorite: (() => {
+          return loadFromLocal(this.seller.id, "favorite", false)
+        })()
+      }
+    },
+    props: {
+      seller:{
+        type: Object
+      }
+    },
+    components: {
+      star,
+      split
+    },
+    computed: {
+      favoriteText(){
+        return this.favorite ? "取消":"收藏"
+      }
+    },
+    created () {
+      this.classMap = ["decrease", "discount", "special", "invoice", "guarantee"]
+    },
+    watch: {
+      "seller"(){
+        this.$nextTick(() => {
+          this._initScroll()
+          this._initPics()
+        })
+      }
+    },
+    mounted () {
+      this.$nextTick(() => {
+        this._initScroll()
+        this._initPics()
+      })
+    },
+    methods: {
+      _initScroll(){
+        if(!this.scroll){
+          this.scroll = new BScroll(this.$refs.seller, {
+            click: true
+          })
+        }else{
+          this.scroll.refresh()
         }
- 
+      },
+      _initPics(){
+        if(this.seller.pics){
+          // 每张图片的宽度
+          let picWidth = 3.2
+          // 图片的 margin
+          let margin = .16
+          // 计算中宽度
+          let width = (picWidth + margin) * this.seller.pics.length -  margin
+          this.$refs.picList.style.width = width + "rem"
+          this.$nextTick(() => {
+            if(!this.picScroll){
+              this.picScroll = new BScroll(this.$refs.picWrapper, {
+                scrollX: true,
+                eventPassthrough: 'vertical'
+              })
+            }else{
+              this.picScroll.refresh()
+            }
+          })
+        }
+      },
+      toggle(){
+        this.favorite = !this.favorite
+        saveToLocal(this.seller.id, "favorite", this.favorite)
+      }
     }
-}
+  }
 </script>
+<style scoped>
+  .seller{
+    position: absolute;
+    top: 4.65rem;
+    width: 100%;
+    bottom: 0;
+    overflow: hidden;
+  }
+  .overview{
+    padding: .48rem;
+  }
+  .seller-title{
+    margin-bottom: .213rem;
+    font-size: .373rem;
+    color: rgb(7, 17, 27);
+  }
+  .desc{
+    padding-bottom: .48rem;
+    border-bottom: 1px solid rgba(7, 17, 27, .1);
+    display: flex;
+    align-items: center;
+  }
+  .star{
+    margin-right: .213rem;
+  }
+  .desc-text{
+    margin-right: .32rem;
+    font-size: .267rem;
+    color: rgb(77, 85, 93);
+  }
+  .remark{
+    display: flex;
+    align-items: center;
+    padding-top: .48rem;
+  }
+  .remark-block{
+    text-align: center;
+    flex: 1;
+    border-right: 1px solid rgba(7, 17, 27, .1);
+  }
+  .remark-block:last-child{
+    border: none;
+  }
+  .remark-title{
+    margin-bottom: .107rem;
+    color: rgb(147, 153, 159);
+    font-size: .267rem;
+  }
+  .remark-content{
+    color: rgb(7, 17, 27);
+    font-weight: 200;
+    font-size: .267rem;
+  }
+  .remark-stress{
+    font-size: .64rem;
+  }
+  .bulletin{
+    padding: .48rem .48rem 0 .48rem;
+  }
+  .bulletin-title{
+    margin-bottom: .213rem;
+    font-size: .373rem;
+    color: rgb(7, 17, 27);
+  }
+  .content-wrapper{
+    padding: 0 .32rem .427rem .32rem;
+    border-bottom: 1px solid rgba(7, 17, 27, .1);
+  }
+  .bulletin-content{
+    font-size: .32rem;
+    font-weight: 200;
+    color: rgb(240, 20, 20);
+    line-height: .64rem;
+  }
+  .support-item{
+    padding: .427rem .32rem;
+    border-bottom: 1px solid rgba(7, 17, 27, .1);
+    display: flex;
+    align-items: center;
+  }
+  .support-item:last-child{
+    border: none;
+  }
+  .detail-icon{
+    display: block;
+    width: .427rem;
+    height: .427rem;
+    margin-right: .16rem;
+    background-size: .427rem .427rem;
+    background-repeat: no-repeat;
+  }
+  .support-text{
+    font-size: .32rem;
+    font-weight: 200;
+    color: rgb(7, 17, 27);
+    line-height: .427rem;
+  }
+  .decrease{
+    background-image: url("~@/assets/seller/decrease_4@3x.png");
+  }
+  .discount{
+    background-image: url("~@/assets/seller/discount_4@3x.png");
+  }
+  .special{
+    background-image: url("~@/assets/seller/special_4@3x.png");
+  }
+  .invoice{
+    background-image: url("~@/assets/seller/invoice_4@3x.png");
+  }
+  .guarantee{
+    background-image: url("~@/assets/seller/guarantee_4@3x.png");
+  }
+  .pics{
+    padding: .48rem;
+  }
+  .pics-title{
+    margin-bottom: .32rem;
+    font-size: .373rem;
+    color: rgb(7, 17, 27);
+  }
+  .pics-wrapper{
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .pics-list{
+    display: flex;
+    align-items: center;
+  }
+  .pics-item{
+    width: 3.2rem;
+    height: 2.4rem;
+    margin-right: .16rem;
+  }
+  .pics-item:last-child{
+    margin-right: 0;
+  }
+  .pics-img{
+    width: 3.2rem;
+    height: 2.4rem;
+    display: block;
+  }
+  .info{
+    padding: .48rem .48rem 0 .48rem;
+  }
+  .info-title{
+    padding-bottom: .32rem;
+    font-size: .373rem;
+    color: rgb(7, 17, 27);
+    border-bottom: 1px solid rgba(7, 17, 27, .1);
+  }
+  .info-item{
+    padding: .427rem .32rem;
+    border-bottom: 1px solid rgba(7, 17, 27, .1);
+    color: rgb(7, 17, 27);
+    font-size: .32rem;
+    line-height: .427rem;
+  }
+  .info-item:last-child{
+    border: none
+  }
+  .favorite{
+    position: absolute;
+    right: .48rem;
+    top: .48rem;
+    text-align: center;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .icon-favorite{
+    color: #d4d6d9;
+    font-size: .64rem;
+    margin-bottom: .107rem;
+  }
+  .active{
+    color: rgb(240, 20, 20);
+  }
+  .favorite-text{
+    font-size: .267rem;
+    color: rgb(77, 85, 93);
+  }
+</style>
