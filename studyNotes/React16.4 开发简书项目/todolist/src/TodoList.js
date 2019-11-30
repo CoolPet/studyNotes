@@ -1,6 +1,7 @@
 import React from "react"
 // 引入 TodoItem 组件
 import TodoItem from "./TodoItem"
+import Test from "./Test"
 // 引入 css 文件
 import "./style.css"
 // React 如果需要定义 class 组件,需要继承 React.Component
@@ -12,9 +13,10 @@ class TodoList extends Component {
 
   constructor(props){
     super(props)
+    // 当组件的 state 或者 props 发生改变的时候, render() 函数就会重新执行
     // 这边相当于 vue 的 data()
     this.state = {
-      inputValue: "Hello React!",
+      inputValue: "",
       list: ["学习语文", "学习数学", "学习 React"]
     }
 
@@ -23,7 +25,18 @@ class TodoList extends Component {
     this.handleItemDelete = this.handleItemDelete.bind(this)
   }
 
+  // componentWillMount 在组件即将被挂载到页面的时刻自动执行
+  componentWillMount(){
+    console.log("componentWillMount")
+  }
+
+  // componentDidMount 在组件被挂载到页面之后自动执行
+  componentDidMount(){
+    console.log("componentDidMount")
+  }
+
   render(){
+    console.log("render")
     return (
       <Fragment>
         {
@@ -39,6 +52,8 @@ class TodoList extends Component {
             value={this.state.inputValue}
             // 调用函数的时候要使用 bind(this) 绑定 this 指向,如果没有绑定 this 指向的话, this 的指向为 undefined
             onChange={this.handleInputChange}
+            // ref 操作 DOM 数据, React 中不推荐使用 ref 直接操作 DOM 数据, React 推崇数据驱动的形式,尽量不要直接操作 DOM
+            ref={(input) => {this.input = input}}
           />
           <button onClick={this.handleBtnClick}>提交</button>
         </div>
@@ -46,9 +61,10 @@ class TodoList extends Component {
         {
           // 这样写注释也可以
         }
-        <ul>
+        <ul ref={(ul) => {this.ul = ul}}>
           {this.getTodoItem()}
         </ul>
+        <Test content={this.state.inputValue}/>
       </Fragment>
     )
   }
@@ -61,7 +77,6 @@ class TodoList extends Component {
         // 如果需要 key 值的情况下, key 值应该放在循环的最外层的框架中,和 vue 一样
         <Fragment key={index}>
           <TodoItem content={item} 
-            index={index}
             deleteItem={this.handleItemDelete}/>
           {/* <li key={index} 
             onClick={this.handleItemDelete.bind(this ,index)}
@@ -85,6 +100,7 @@ class TodoList extends Component {
     // ES6 语法中,如果函数要返回一个对象,不用使用 return,可以将返回的对象用 () 包裹起来
     // 例:this.setState(() => { return { inputValue: value } }) === this.setState(() => ({ inputValue: value }))
     const value = e.target.value
+    // const value = this.input.value
     this.setState(() => ({
       inputValue: value
     }))
@@ -96,7 +112,9 @@ class TodoList extends Component {
         // 使用 ES6 的 ...(扩展运算符) 给数组添加对象
         list: [...prevState.list, prevState.inputValue],
         inputValue: ""
-      }))
+      }), () => {
+        console.log(this.ul.querySelectorAll("div").length)
+      })
     }else{
       alert("输入框不能为空")
     }
