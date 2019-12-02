@@ -1,4 +1,5 @@
 import React from "react"
+import axios from "axios"
 // 引入 TodoItem 组件
 import TodoItem from "./TodoItem"
 import Test from "./Test"
@@ -33,6 +34,34 @@ class TodoList extends Component {
   // componentDidMount 在组件被挂载到页面之后自动执行
   componentDidMount(){
     console.log("componentDidMount")
+    axios.get("http://localhost:3000//todolist.json")
+      .then((res) => {
+        console.log("success")
+        this.setState(() => ({
+          list: res.data
+        }))
+      })
+      .catch(() => {
+        console.log("error")
+      })
+  }
+
+  // shouldComponentUpdate 组件被更新之前,它会自动被执行
+  // shouldComponentUpdate 使用后,需要返回一个 Boolean,否则报错,如果返回结果为 false,那么组件不会发生变化,否则组件发生变化
+  shouldComponentUpdate(){
+    console.log("shouldComponentUpdate")
+    return true
+  }
+
+  // componentWillUpdate 组件被更新之前,它会自动执行,但是在 shouldComponentUpdate 之后被执行
+  // 如果 shouldComponentUpdate 返回 true,它才会执行,否则反之 
+  componentWillUpdate(){
+    console.log("componentWillUpdate")
+  }
+
+  // componentDidUpdate 组件更新完成之后自动执行
+  componentDidUpdate(){
+    console.log("componentDidUpdate")
   }
 
   render(){

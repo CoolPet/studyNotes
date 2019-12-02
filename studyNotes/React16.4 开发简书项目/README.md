@@ -46,5 +46,29 @@
 
 > 生命周期函数指在某一个时刻组件会自动调用执行的函数
 
-- componentWillMount: 在组件即将被挂载到页面的时刻自动执行
-- componentDidMount: 在组件被挂载到页面之后自动执行
+- Initialization(初始化过程)
+  - 初始化数据和组件(相当于 React 中的 constructor,虽说 constructor 虽然属于 ES6 的语法,但是也相当于 React 的声明周期)
+- Mounting(挂载过程)
+  - componentWillMount:在组件即将被挂载到页面的时刻自动执行
+  - render:页面挂载
+  - componentDidMount:在组件被挂载到页面之后自动执行
+- Updation(更新时刻)
+  - props(组件)
+    - componentWillReceiveProps:当一个组件从父组件接受参数,只要父组件的 render 函数被执行,子组件的这个生命周期函数就会被自动执行
+      - 如果这个组件第一次存在于父组件中,不会执行
+      - 如果这个组件之前已经存在于父组件中,才会执行
+    - shouldComponentUpdate:组件被更新之前,它会自动被执行
+    - componentWillUpdate:组件被更新之前,它会自动执行,但是在 shouldComponentUpdate 之后被执行
+      - 如果 shouldComponentUpdate 返回 true,它才执行,否则反之 
+    - render:页面挂载
+    - componentDidUpdate:组件更新完成之后自动执行
+  - states(数据)
+    - shouldComponentUpdate:组件被更新之前,它会自动被执行
+    - componentWillUpdate:组件被更新之前,它会自动执行,但是在 shouldComponentUpdate 之后被执行
+      - 如果 shouldComponentUpdate 返回 true,它才执行,否则反之 
+    - render:页面挂载
+    - componentDidUpdate:组件更新完成之后自动执行
+- Unmounting(解除挂载)
+  - componentWillUnmount:当组件即将被从页面中剔除的时候自动执行
+  
+<img src="./笔记的图片/React的生命周期.png">
