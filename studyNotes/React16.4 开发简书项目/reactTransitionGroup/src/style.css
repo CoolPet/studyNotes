@@ -1,0 +1,31 @@
+/* 入场动画 */
+/* 执行入场动画时 */
+.fade-enter, .fade-appear{
+  opacity: 0;
+}
+/* 入场动画没有执行完就一直存在，当入场动画执行完了就不存在了 */
+.fade-enter-active, .fade-appear-active{
+  opacity: 1;
+  transition: opacity 1s ease-in;
+}
+/* 当整个入场动画完成之后执行 */
+.fade-enter-done{
+  opacity: 1;
+}
+/* 出场动画 */
+/* 执行出场动画时 */
+.fade-exit{
+  opacity: 1;
+}
+/* 出场动画没有执行完就一直存在，当出场动画执行完了就不存在了 */
+.fade-exit-active{
+  opacity: .5;
+  transition: opacity 1s ease-in;
+}
+/* 当整个出场动画完成之后执行 */
+.fade-exit-done{
+  opacity: 0;
+}
+.btnStyle{
+  display: block;
+}

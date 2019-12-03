@@ -1,0 +1,14 @@
+.header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+.int{
+  width: 65%;
+  margin-right: 10px;
+}
+.list{
+  width: 82%;
+  margin: auto;
+}

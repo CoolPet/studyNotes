@@ -72,3 +72,7 @@
   - componentWillUnmount:当组件即将被从页面中剔除的时候自动执行
   
 <img src="./笔记的图片/React的生命周期.png">
+
+### Redux 工作流
+
+<img src="./笔记的图片/Redux工作流.png">
