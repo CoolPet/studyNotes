@@ -75,4 +75,88 @@
 
 ### Redux 工作流
 
+#### 使用 Redux 的原因
+
+- 在 React 中,数据在组件中是单向流动的,数据从一个方向父组件流向子组件(通过 props),所以,两个非父子组件之间通信就相对麻烦, Redux 的出现就是为了解决 state 里面的数据问题
+
+#### Redux 的设计理念
+
+- Redux 是将整个应用状态存储到一个地方上称为 store,里面保存着一个状态树 store tree,组件可以派发(dispatch)行为(action)给 store,而不是直接通知其他组件,组件内部通过订阅 store 中的状态 state 来刷新自己的视图
+
 <img src="./笔记的图片/Redux工作流.png">
+
+#### Redux 的三大原则
+
+- 唯一数据源
+  - 整个应用的 state 都被存储到一个状态树里面,并且这个状态树,只存在于唯一的 store 中
+- 保持只读状态
+  - state 是只读的,唯一改变 state 的方法就是触发 action, action 是一个用于描述以发生时间的普通对象
+- 数据改变只能通过纯函数来执行
+  - 使用纯函数来执行修改,为了描述 action 如何改变 state 的,需要编写 reducers
+
+#### Redux 概念解析
+
+- store
+  - store 就是保存数据的地方,可以把它看成一个数据,整个应用只能有一个 store
+  - Redux 提供 createStore 这个函数,用来生成 store
+
+  ```
+
+    import { createStore } from "redux"
+    const store = createStore(fn)
+
+  ```
+
+- state
+  - state 就是 store 里面存储的数据, store 里面可以拥有多个 state, Redux 规定一个 state 对应一个 view,只要 state 相同, view 就是一样的,反过来也是一样的,可以通过 store.getState() 获取
+
+  ```
+
+    import {createStore} from 'redux'
+    const store=createStore(fn);
+    const state=store.getState()
+
+  ```
+
+- action 
+  - state 的改变会导致 view 的变化,但是在 Redux 中不能直接操作 state 也就是说不能使用 this.setState 来操作,用户只能接触到 view;在 Redux 中提供了一个对象来告诉 store 需要改变 state; action 是一个对象,其中 type 属性是必须的,表示 action 的名称,其他的可以根据需求自由设置
+
+  ```
+
+    const action={
+      type: ADD_TODO,
+      payload:'redux原理'
+    }
+    // 在上面代码中, action 的名称是 ADD_TODO,携带的数据是字符串'redux 原理', action 描述当前发生的事情,这是改变 state 的唯一的方式
+
+  ```
+
+- store.dispatch()
+  - store.dispatch() 是 view 发出 action 的唯一办法
+
+  ```
+
+    store.dispatch({
+      type: ADD_TODO,
+      payload:'redux原理'
+    })
+    // store.dispatch 接收一个 action 作为参数,将它发送给 store 通知 store 来改变 state
+
+  ```
+
+- reducer
+  - store 收到 action 以后,必须给出一个新的 state,这样 view 才会发生变化,这种 state 的计算过程就叫做 reducer
+  - reducer 是一个纯函数,它接收 action 和当前 state 作为参数,返回一个新的 state
+  - 注意: reducer 必须是一个纯函数,也就是说函数返回的结果必须由参数 state 和 action 决定,而且不产生任何副作用也不能修改 state 和 action 对象
+
+  ```
+
+    const reducer =(state,action)=>{
+      switch(action.type){
+        case ADD_TODO:
+            return newstate;
+        default return state
+      }
+    }
+
+  ```
