@@ -20,7 +20,7 @@ export default (state = defaultState, action) => {
     return newState
   }
   if(action.type === ADD_LIST){
-    if(state.inputValue !== ""){
+    if(state.inputValue !== "" && !new RegExp("^[ ]+$").test(state.inputValue)){
       const newState = JSON.parse(JSON.stringify(state))
       newState.list.push(newState.inputValue)
       newState.inputValue = ""
