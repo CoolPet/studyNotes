@@ -1,5 +1,5 @@
 {
-  "name": "style-redux",
+  "name": "style-redux-thunk",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
