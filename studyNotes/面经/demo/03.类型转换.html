@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>03.类型转换</title>
+</head>
+<body>
+  <script>
+    // 转 Boolean 类型
+    // 在条件判断的时候,除了 undefined, null, false, NaN, "", 0, -0 值以外,其他所有值都转为 true,包括所有对象
+    // number 转 Boolean,数字除了 0, -0 以外,其他所有值都转为 true
+    console.log(Boolean(0))   // false
+    console.log(Boolean(-0))    // false
+    console.log(Boolean(1))   // true
+    // undefined 转 Boolean
+    console.log(Boolean(undefined))   // false
+    // null 转 Boolean
+    console.log(Boolean(null))    // false
+    // boolean 转 Boolean
+    console.log(Boolean(false))   // false
+    console.log(Boolean(true))    // true
+    // NaN 转 Boolean
+    console.log(Boolean(NaN))   // false
+    // string 转 Boolean
+    console.log(Boolean(""))    // false
+    console.log(Boolean("111"))   // true
+    console.log(Boolean("aaa"))   // true
+    // function 转 Boolean
+    console.log(Boolean(function(){return true}))    // true
+    console.log(Boolean(function(){return false}))    // true
+    // symbol 转 Boolean
+    console.log(Boolean(Symbol()))    // true
+
+    // 对象转基本类型
+    // 对象转换基本类型时,首先会调用 valueOf 然后调用 toString
+    let a = {
+      valueOf(){
+        return 0
+      },
+      toString(){
+        return "1"
+      }
+    }
+    console.log(1 + a)    // 1
+    console.log("1" + a)    // "10"
+    // 如果使用 Symbol.toPrimitive,那么它的优先级是最高的
+    let b = {
+      valueOf(){
+        return 0
+      },
+      toString(){
+        return "1"
+      },
+      [Symbol.toPrimitive](){
+        return 2
+      }
+    }
+    console.log(1 + b)    // 3
+    console.log("1" + b)    // "12"
+
+    // 四则运算符
+    console.log(1 + "1")    // "11"
+    console.log(2 * "2")    // 4
+    console.log([1, 2] + [2, 1])    // "1, 22, 1"
+    // [1, 2] 与 [2, 1] 的初始类型为 object
+    // 如果在使用加号相加的时候
+    // 将 object 类型使用 toString() 转换为 string 类型
+    // [1, 2].toString()  =>  "1,2"
+    // [2, 1].toString()  =>  "2,1"
+    // 在将 string 相加
+    // "1,2" + "2,1" => "1,22,1"
+    // 对于 "+" 需要注意 "a" + + "b"
+    console.log(a + + "b")    // "aNaN"
+    console.log(1 + + "1")    // 2
+
+    // == 操作符
+    console.log([] == ![])    // true
+    // [] == ![]
+    // [] 转为 true,取反变成 false
+    // [] == false
+    // 如果 == 操作符两边只有一边有 Boolean, Boolean 这边的值返回 ToNumber() 的结果
+    // [] == ToNumber(false)
+    // [] == 0
+    // 如果 == 操作符两边,一边为 Object,另一边为 String 或 Number,那么 Object 这边的值返回 ToPrimitive() 的结果
+    // ToPrimitive([]) == 0
+    // [].toString() => ""
+    // "" == 0
+    // 返回 ToNumber("")
+    // 0 == 0 => true
+  </script>
+</body>
+</html>
