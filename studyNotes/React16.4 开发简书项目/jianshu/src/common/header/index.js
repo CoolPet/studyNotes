@@ -1,4 +1,4 @@
-import React from "react"
+import React,{ Component } from "react"
 import { CSSTransition } from "react-transition-group"
 import { connect } from "react-redux"
 import {
@@ -8,17 +8,20 @@ import {
   NavItem,
   SearchWrapper,
   NavSearch,
+  SearchInfo,
+  SearchInfoTitle,
+  SearchInfoSwitch,
+  SearchInfoList,
+  SearchInfoItem,
   Addition,
   Btn
 } from "./style"
-import { inputFocus, inputBlur } from "./store"
+import { inputFocus, inputBlur, getList, mouseEnter, mouseLeave, changePage } from "./store"
 
-const Fragment = React.Fragment
-
-const Header = (props) => {
-  const { focused, handleInputFocus, handleInputBlur } = props
-  return(
-    <Fragment>
+class Header extends Component{
+  render(){
+    const { focused, handleInputFocus, handleInputBlur } = this.props
+    return(
       <HeaderWrapper>
         <Logo />
         <Nav>
@@ -41,6 +44,7 @@ const Header = (props) => {
               ></NavSearch>
             </CSSTransition>
             <i className={focused ? 'focused iconfont' : 'iconfont'}>&#xe6d9;</i>
+            {this.getListArea()}
           </SearchWrapper>
         </Nav>
         <Addition>
@@ -51,23 +55,77 @@ const Header = (props) => {
           <Btn className="reg">注册</Btn>
         </Addition>
       </HeaderWrapper>
-    </Fragment>
-  )
+    )
+  }
+
+  getListArea(show){
+    const { list, page, handleMouseEnter, handleMouseLeave, mouseIn, focused, handleChangePage, totalPage } = this.props
+    const newList = list.toJS()
+    const pageList = []
+
+    for(let i = (page * 10); i < (page + 1) * 10; i++){
+      pageList.push(
+        <SearchInfoItem key={newList[i]}>{newList[i]}</SearchInfoItem>
+      )
+    }
+
+    if(focused || mouseIn){
+      return (
+        <SearchInfo 
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <SearchInfoTitle>
+            热门搜索
+            <SearchInfoSwitch onClick={() => {
+              handleChangePage(page, totalPage)
+            }}>
+              换一批
+            </SearchInfoSwitch>
+          </SearchInfoTitle>
+          <SearchInfoList>
+            {pageList}
+          </SearchInfoList>
+        </SearchInfo>
+      )
+    }else{
+      return null
+    }
+  }
 }
 
 const mapStateToProps = (state) =>{
   return {
-    focused: state.header.focused
+    focused: state.getIn(["header", "focused"]),   // state.get("header").get("focused")
+    list: state.getIn(["header", "list"]),
+    page: state.getIn(["header", "page"]),
+    totalPage: state.getIn(["header", "totalPage"]),
+    mouseIn: state.getIn(["header", "mouseIn"])
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return{
     handleInputFocus(){
+      dispatch(getList())
       dispatch(inputFocus())
     },
     handleInputBlur(){
       dispatch(inputBlur())
+    },
+    handleMouseEnter(){
+      dispatch(mouseEnter())
+    },
+    handleMouseLeave(){
+      dispatch(mouseLeave())
+    },
+    handleChangePage(page, totalPage){
+      if (page < totalPage-1) {
+        dispatch(changePage(page + 1))
+      }
+      else{
+        dispatch(changePage(0))
+      }
     }
   }
 }
