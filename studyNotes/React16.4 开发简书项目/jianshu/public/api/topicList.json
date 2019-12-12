@@ -1,0 +1,54 @@
+{
+  "success": true,
+  "data":[
+    {
+      "id": 1,
+      "title": "社会热点",
+      "imgUrl": "https://upload.jianshu.io/collections/images/1653720/crop1534423210215.jpg"
+    },{
+      "id": 2,
+      "title": "十点读书写字",
+      "imgUrl": "https://upload.jianshu.io/collections/images/271839/android.graphics.Bitmap_2f4cb115.jpeg"
+    },{
+      "id": 3,
+      "title": "程序员",
+      "imgUrl": "https://upload.jianshu.io/collections/images/16/computer_guy.jpg"
+    },{
+      "id": 4,
+      "title": "简诗",
+      "imgUrl": "https://upload.jianshu.io/collections/images/2194/android.graphics.Bitmap_6dd6427.jpeg"
+    },{
+      "id": 5,
+      "title": "知了·IT",
+      "imgUrl": "https://upload.jianshu.io/collections/images/5054/%E7%9F%A5%E4%BA%86.png"
+    },{
+      "id": 6,
+      "title": "iOS Developer",
+      "imgUrl": "https://upload.jianshu.io/collections/images/1276/162902612251cbd95971b82.png"
+    },{
+      "id": 7,
+      "title": "Pythoner集中营",
+      "imgUrl": "https://upload.jianshu.io/collections/images/2153/5.png"
+    },{
+      "id": 8,
+      "title": "GitHub上有趣的资源",
+      "imgUrl": "https://upload.jianshu.io/collections/images/148/github-logo1.jpg"
+    },{
+      "id": 9,
+      "title": "互联网研究所",
+      "imgUrl": "https://upload.jianshu.io/collections/images/493683/%E7%A0%94%E7%A9%B6%E6%89%80.jpg"
+    },{
+      "id": 10,
+      "title": "花非花诗集",
+      "imgUrl": "https://upload.jianshu.io/collections/images/1855/android.graphics.Bitmap_13eedc6.jpeg"
+    },{
+      "id": 11,
+      "title": "Mac优雅使用指南",
+      "imgUrl": "https://upload.jianshu.io/collections/images/2152/4.png"
+    },{
+      "id": 12,
+      "title": "程序猿阵线联盟-汇总各类技术干货",
+      "imgUrl": "https://upload.jianshu.io/collections/images/236521/12704472521397.jpg"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components"
+import styled, { createGlobalStyle } from "styled-components"
 
 export const GlobalSyled = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -43,4 +43,14 @@ export const GlobalSyled = createGlobalStyle`
     border-collapse: collapse;
     border-spacing: 0;
   }
+`
+
+export const HeaderNav = styled.div`
+  position: fixed;
+  top: 0;
+  width: 100%;
+`
+
+export const Details = styled.div`
+  padding-top: 56px;
 `
