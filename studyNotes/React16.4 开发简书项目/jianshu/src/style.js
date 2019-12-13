@@ -43,6 +43,9 @@ export const GlobalSyled = createGlobalStyle`
     border-collapse: collapse;
     border-spacing: 0;
   }
+  a{
+    text-decoration: none
+  }
 `
 
 export const HeaderNav = styled.div`
@@ -53,4 +56,8 @@ export const HeaderNav = styled.div`
 
 export const Details = styled.div`
   padding-top: 56px;
+`
+
+export const Matter = styled.div`
+  background: #f9f9f9;
 `

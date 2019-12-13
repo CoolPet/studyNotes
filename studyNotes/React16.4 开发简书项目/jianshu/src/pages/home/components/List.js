@@ -8,6 +8,7 @@ import {
 } from "../style"
 import { connect } from "react-redux"
 import { getArticleList, getMore } from "../store"
+import { Link } from "react-router-dom"
 
 class List extends PureComponent{
   render(){
@@ -19,7 +20,9 @@ class List extends PureComponent{
             return(
               <ListItem key={index}>
                 <ListInfo>
-                  <h3 className="title">{item.title}</h3>
+                  <Link to="/detail">
+                    <h3 className="title">{item.title}</h3>
+                  </Link>
                   <p className="desc">{item.desc}</p>
                   <ListDiscuss>
                     <ListDiscussItem className="jewel">
@@ -37,7 +40,9 @@ class List extends PureComponent{
                     </ListDiscussItem>
                   </ListDiscuss>
                 </ListInfo>
-                <img className="pic" src={item.imgURL} alt=""/>
+                <Link to="/detail">
+                  <img className="pic" src={item.imgURL} alt=""/>
+                </Link>
               </ListItem>
             )
           })

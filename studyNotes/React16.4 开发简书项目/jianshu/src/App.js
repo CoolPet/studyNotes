@@ -4,7 +4,7 @@ import { Provider } from "react-redux"
 import { HashRouter, Route } from "react-router-dom"
 
 // 引入全局样式
-import { GlobalSyled, Details, HeaderNav } from "./style"
+import { GlobalSyled, Details, HeaderNav, Matter } from "./style"
 import { IconFont } from "./statics/iconfont/iconfont"
 
 // 引入头部文件
@@ -22,17 +22,21 @@ class App extends PureComponent{
     return(
       <Provider store={store}>
         <div>
-          <HeaderNav>
-            <Header/>
-          </HeaderNav>
+          <HashRouter>
+            <HeaderNav>
+              <Header/>
+            </HeaderNav>
+          </HashRouter>  
           {
             // HashRouter 代表的是路由
             // Route 代表的是路由规则，在 Route 加上 exact 可以进行路径完全匹配的判断，只有路径和 path 的路径完全一致才会显示,否则不显示
           }
           <Details>
             <HashRouter>
-              <Route path="/home" exact component={Home}></Route>
-              <Route path="/detail" exact component={Detail}></Route>
+              <Route path="/" exact component={Home}></Route>
+              <Matter>
+                <Route path="/detail" exact component={Detail}></Route>
+              </Matter>
             </HashRouter>
           </Details>
           <GlobalSyled/>
