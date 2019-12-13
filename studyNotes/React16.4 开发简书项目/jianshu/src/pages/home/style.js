@@ -71,6 +71,7 @@ export const ListItem = styled.div`
     height: 100px;
     display: block;
     border-radius: 10px;
+    cursor: pointer;
   }
 `
 
@@ -104,6 +105,7 @@ export const ListInfo = styled.div`
     font-weight: bold;
     color: #333;
     margin: -7px 0 4px;
+    cursor: pointer;
   }
   .desc{
     font-size: 13px;
@@ -111,6 +113,20 @@ export const ListInfo = styled.div`
     color: #999;
     margin-bottom: 8px;
   }
+`
+
+export const LoadMore = styled.div`
+  width: 100%;
+  border-radius: 20px;
+  background-color: #9b9b9b;
+  margin: 30px auto;
+  padding: 10px 15px;
+  text-align: center;
+  font-size: 15px;
+  line-height: 22px;
+  color: #fff;
+  box-sizing: border-box;
+  cursor: pointer;
 `
 
 export const RecommendInfo = styled.div`
@@ -170,14 +186,130 @@ export const DownloadCode = styled.div`
   position: absolute;
   height: 150px;
   width: 150px;
-  top: -180px;
+  top: -185px;
   padding: 10px;
   background: #fff;
-  border: 1px solid #f0f0f0;
+  border: 1px solid #777;
   .qrcode{
     width: 150px;
     height: 150px;
     opacity: .85;
     display: block;
   }
+`
+
+export const WriterInfo = styled.div`
+  width: 100%;
+`
+
+export const WriterTitle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  div{
+    font-size: 14px;
+    color: #969696;
+  }
+  .batch{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  .spin{
+    display: block;
+    float: left;
+    font-size: 12px;
+    margin-right: 2px;
+    transition: all .4s ease-in;
+    transform-origin: center center;
+  }
+`
+
+export const WriterItem = styled.div`
+  margin-top: 15px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+`
+
+export const WriterPic = styled.img.attrs({
+  alt: ""
+})`
+  display: block;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  margin-right: 10px;
+`
+
+export const WriterItemRight = styled.div`
+  flex: 1
+`
+
+export const WriterItemTop = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+
+export const WriterItemBottom = styled.span`
+  margin-top: 5px;
+  font-size: 12px;
+  color: #969696;
+  display: block;
+`
+
+export const WriterItemTopLeft = styled.div`
+  font-size: 14px;
+  line-height: 20px;
+`
+
+export const WriterItemTopRight = styled.div`
+  font-size: 13px;
+  color: #42c02e;
+  cursor: pointer;
+`
+
+export const WriterAll = styled.div`
+  padding: 7px 7px 7px 12px;
+  width: 100%;
+  font-size: 13px;
+  color: #787878;
+  background-color: #f7f7f7;
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 19px;
+  margin-top: 20px;
+`
+
+export const BackTop = styled.div`
+  position: fixed;
+  right: 40px;
+  bottom: 40px;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #dcdcdc;
+  background-color: #fff;
+  .iconfont{
+    font-size: 20px;
+  }
+`
+
+export const ShowHint = styled.div`
+  position: absolute;
+  left: -75px;
+  width: 60px;
+  font-size: 14px;
+  padding: 5px;
+  background: #333;
+  color: #fff;
+  border-radius: 6px;
+  text-align: center;
 `

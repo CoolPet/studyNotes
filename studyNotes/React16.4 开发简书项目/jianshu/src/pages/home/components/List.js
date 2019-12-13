@@ -1,22 +1,23 @@
-import React,{ Component } from "react"
+import React,{ PureComponent } from "react"
 import {
   ListItem,
   ListInfo,
   ListDiscuss,
-  ListDiscussItem
+  ListDiscussItem,
+  LoadMore
 } from "../style"
 import { connect } from "react-redux"
-import { getArticleList } from "../store"
+import { getArticleList, getMore } from "../store"
 
-class List extends Component{
+class List extends PureComponent{
   render(){
-    const { articleList } = this.props
+    const { articleList, getMoreList, articlePage } = this.props
     return(
       <div>
         {
-          articleList.toJS().map((item) => {
+          articleList.toJS().map((item, index) => {
             return(
-              <ListItem key={item.id}>
+              <ListItem key={index}>
                 <ListInfo>
                   <h3 className="title">{item.title}</h3>
                   <p className="desc">{item.desc}</p>
@@ -41,6 +42,7 @@ class List extends Component{
             )
           })
         }
+        <LoadMore onClick={() => getMoreList(articlePage)}>阅读更多</LoadMore>
       </div>
     )
   }
@@ -52,7 +54,8 @@ class List extends Component{
 
 const mapStateToProps = (state) => {
   return{
-    articleList: state.getIn(["home", "articleList"])
+    articleList: state.getIn(["home", "articleList"]),
+    articlePage: state.getIn(["home", "articlePage"])
   }
 }
 
@@ -60,6 +63,9 @@ const mapDispatchToProps = (dispatch) => {
   return{
     getList(){
       dispatch(getArticleList())
+    },
+    getMoreList(articlePage){
+      dispatch(getMore(articlePage+1))
     }
   }
 }

@@ -1,4 +1,4 @@
-import React,{ Component } from "react"
+import React,{ PureComponent } from "react"
 import { CSSTransition } from "react-transition-group"
 import { connect } from "react-redux"
 import {
@@ -18,7 +18,7 @@ import {
 } from "./style"
 import { inputFocus, inputBlur, getList, mouseEnter, mouseLeave, changePage } from "./store"
 
-class Header extends Component{
+class Header extends PureComponent{
   render(){
     const { focused, handleInputFocus, handleInputBlur, list } = this.props
     return(

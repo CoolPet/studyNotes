@@ -1,4 +1,4 @@
-import React,{ Component } from "react"
+import React,{ PureComponent } from "react"
 import {
   TopicWrapper,
   TopicItem,
@@ -7,7 +7,7 @@ import {
 import { connect } from "react-redux"
 import { getTopicList } from "../store"
 
-class Topic extends Component{
+class Topic extends PureComponent{
   UNSAFE_componentWillMount(){
     this.props.getList()
   }
