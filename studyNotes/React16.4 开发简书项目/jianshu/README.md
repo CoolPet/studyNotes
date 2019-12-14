@@ -1,68 +1,22 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### React 开发简书项目
 
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- ``` styled-components ```
+  - ``` styled ``` 用于定义各个组件中样式的定义
+  - ``` createGlobalStyle ``` 用于定义统一样式的定义
+- ``` react-router-dom ```
+  - ``` HashRouter ``` 代表的是路由
+  - ``` Route ``` 代表的是路由规则,在 ``` Route ``` 上加 ``` exact ``` 可以进行路径的完全匹配判断,只有路径完全一致才显示,否则不显示
+- ``` immutable ```
+  - ``` fromJS ``` 将纯 JS 对象和数组深层转换为不可变映射和列表
+  - ``` toJS ``` 使一个 immutable 对象数组变为正常的对象数组
+  - 改变数据的时候用 set(key, value) 或者 merge({key1: value1, key2: value2})
+- ``` redux ```
+  - ``` createStore ``` 创建一个 redux 的存储,其中包含应用程序的完整状态树
+  - ``` applyMiddleware ``` 扩展 redux 的一种方式
+  - ``` compose ``` 从右到左来组合多个函数
+- ``` reducer ``` 纯函数,一种归约函数,返回给定当前状态树和要处理的动作的下一个状态树
+- ``` redux-thunk ``` redux 中间件
+  - ``` thunk ```
+- ``` redux-immutable ``` 统一数据格式
+  - ``` combineReducers ``` 创建一个统一整合的 ``` immutable ``` 对象
+  - 获取数据的时候用 get(key, value) 或者 getIn([key, value])
