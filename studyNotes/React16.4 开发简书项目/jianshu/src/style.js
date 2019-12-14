@@ -52,6 +52,7 @@ export const HeaderNav = styled.div`
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 9;
 `
 
 export const Details = styled.div`

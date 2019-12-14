@@ -15,7 +15,9 @@ import store from "./store"
 
 // 引入路径文件
 import Home from "./pages/home"
-import Detail from "./pages/detail"
+import Login from "./pages/login"
+import Detail from "./pages/detail/loadable"
+import Write from "./pages/write"
 
 class App extends PureComponent{
   render(){
@@ -34,8 +36,10 @@ class App extends PureComponent{
           <Details>
             <HashRouter>
               <Route path="/" exact component={Home}></Route>
+              <Route path="/login" exact component={Login}></Route>
+              <Route path="/write" exact component={Write}></Route>
               <Matter>
-                <Route path="/detail" exact component={Detail}></Route>
+                <Route path="/detail/id=:id" exact component={Detail}></Route>
               </Matter>
             </HashRouter>
           </Details>

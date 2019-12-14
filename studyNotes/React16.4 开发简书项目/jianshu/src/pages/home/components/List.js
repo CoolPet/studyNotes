@@ -20,7 +20,7 @@ class List extends PureComponent{
             return(
               <ListItem key={index}>
                 <ListInfo>
-                  <Link to="/detail">
+                  <Link to={"/detail/id="+index}>
                     <h3 className="title">{item.title}</h3>
                   </Link>
                   <p className="desc">{item.desc}</p>
@@ -40,7 +40,7 @@ class List extends PureComponent{
                     </ListDiscussItem>
                   </ListDiscuss>
                 </ListInfo>
-                <Link to="/detail">
+                <Link to={"/detail/id="+index}>
                   <img className="pic" src={item.imgURL} alt=""/>
                 </Link>
               </ListItem>

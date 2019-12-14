@@ -10,12 +10,11 @@ export const addDetail = (data) => ({
   content: fromJS(data.content)
 })
 
-export const getDetails = () => {
+export const getDetails = (id) => {
   return (dispatch) => {
-    axios.get('/api/detail.json')
+    axios.get('/api/detail.json?id=' + id)
       .then((res) => {
         const data = res.data
-        console.log(data)
         dispatch(addDetail(data.data))
       }).catch((err) => {
         console.log(err)

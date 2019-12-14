@@ -17,11 +17,12 @@ import {
   Btn
 } from "./style"
 import { inputFocus, inputBlur, getList, mouseEnter, mouseLeave, changePage } from "./store"
+import { changeLogin, changeLoginState } from "../../pages/login/store"
 import { Link } from "react-router-dom"
 
 class Header extends PureComponent{
   render(){
-    const { focused, handleInputFocus, handleInputBlur, list } = this.props
+    const { focused, handleInputFocus, handleInputBlur, list, login, logout, signIn } = this.props
     return(
       <HeaderWrapper>
         <Link to="/">
@@ -30,7 +31,11 @@ class Header extends PureComponent{
         <Nav>
           <NavItem className="left active">首页</NavItem>
           <NavItem className="left">下载App</NavItem>
-          <NavItem className="right">登录</NavItem>
+          {
+            login ? 
+            <Link to="/login"><NavItem onClick={logout} className="right">退出</NavItem></Link> : 
+            <Link to="/login"><NavItem className="right">登录</NavItem></Link>
+          }
           <NavItem className="right beta"></NavItem>
           <NavItem className="right">
             <i className="iconfont setting">&#xe666;</i>
@@ -51,11 +56,17 @@ class Header extends PureComponent{
           </SearchWrapper>
         </Nav>
         <Addition>
-          <Btn className="writting">
-            <i className="iconfont">&#xe616;</i>
-            写文章
-          </Btn>
-          <Btn className="reg">注册</Btn>
+          <Link to="/write">
+            <Btn className="writting">
+              <i className="iconfont">&#xe616;</i>
+              写文章
+            </Btn>
+          </Link>
+          {
+            login ?
+            <Btn className="reg">你好</Btn>:
+            <Link to="/login"><Btn className="reg" onClick={signIn}>注册</Btn></Link>
+          }
         </Addition>
       </HeaderWrapper>
     )
@@ -110,7 +121,8 @@ const mapStateToProps = (state) =>{
     list: state.getIn(["header", "list"]),
     page: state.getIn(["header", "page"]),
     totalPage: state.getIn(["header", "totalPage"]),
-    mouseIn: state.getIn(["header", "mouseIn"])
+    mouseIn: state.getIn(["header", "mouseIn"]),
+    login: state.getIn(["login", "login"])
   }
 }
 
@@ -147,6 +159,13 @@ const mapDispatchToProps = (dispatch) => {
       else{
         dispatch(changePage(0))
       }
+    },
+    logout(){
+      dispatch(changeLogin(false))
+      dispatch(changeLoginState("login"))
+    },
+    signIn(){
+      dispatch(changeLoginState("signIn"))
     }
   }
 }

@@ -6,6 +6,7 @@ import {
   Content
 } from "./style"
 import { connect } from "react-redux"
+import { withRouter } from "react-router-dom"
 import {
   getDetails
 } from "./store"
@@ -24,7 +25,8 @@ class Detail extends PureComponent{
   }
 
   UNSAFE_componentWillMount(){
-    this.props.getDetail()
+    const id = this.props.match.params.id
+    this.props.getDetail(id)
   }
 }
 
@@ -37,10 +39,10 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return{
-    getDetail(){
-      dispatch(getDetails())
+    getDetail(id){
+      dispatch(getDetails(id))
     }
   }
 }
 
-export default connect(mapState, mapDispatch)(Detail)
+export default connect(mapState, mapDispatch)(withRouter(Detail))
