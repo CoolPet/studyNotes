@@ -33,7 +33,7 @@ class Header extends React.Component{
 
   UNSAFE_componentWillMount(){
     this.setState({
-      userName: "河畔一角"
+      userName: "Black&潴"
     })
 
     setInterval(() => {
