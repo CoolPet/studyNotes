@@ -7,6 +7,7 @@ const { SubMenu } = Menu
 
 class NavLeft extends React.Component{
   render(){
+    const { menuTreeNode } = this.state
     return(
       <div>
         <div className="logo">
@@ -16,7 +17,7 @@ class NavLeft extends React.Component{
         <Menu 
           theme="dark"
         >
-          {this.state.menuTreeNode}
+          {menuTreeNode}
         </Menu>
       </div>
     )

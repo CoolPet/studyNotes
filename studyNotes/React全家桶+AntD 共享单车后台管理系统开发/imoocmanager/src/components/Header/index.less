@@ -1,4 +1,7 @@
+@import "../../style//default.less";
+
 .header{
+  background-color: @colorM;
   .header-top{
     height: 60px;
     display: flex;
@@ -11,15 +14,40 @@
   }
   .breadcrumb{
     height: 40px;
+    line-height: 40px;
     display: flex;
     align-items: center;
     padding: 0 20px;
     border-top: 1px solid #f9c700;
     .breadcrumb-title{
       text-align: center;
+      font-size: @fontC;
+      font-weight: bold;
+      &::after{
+        position: absolute;
+        content: "";
+        left: 75px;
+        top: 39px;
+        border-top: 9px solid @colorM;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+      }
     }
     .weather{
-      text-align: right;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      font-size: @fontE;
+      .weather-detail{
+        margin-left: 10px;
+        display: flex;
+        align-items: center;
+        img{
+          width: 30px;
+          height: auto;
+          display: block;
+        }
+      }
     }
   }
 }

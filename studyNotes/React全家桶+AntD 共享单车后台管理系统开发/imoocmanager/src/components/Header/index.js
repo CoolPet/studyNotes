@@ -1,15 +1,18 @@
 import React from "react"
 import { Row, Col } from "antd"
 import "./index.less"
+import Util from "../../utils/util"
+import axios from "axios"
 
 class Header extends React.Component{
   render(){
+    const { userName, sysTime, weather_img, weather } = this.state
     return(
       <div className="header">
         <Row className="header-top">
           <Col span={24}>
-            <span>欢迎,{this.state.userName}</span>
-            <a href="#">退出</a>
+            <span>欢迎,{userName}</span>
+            <a href="/#">退出</a>
           </Col>
         </Row>
         <Row className="breadcrumb">
@@ -17,8 +20,11 @@ class Header extends React.Component{
             首页
           </Col>
           <Col span={20} className="weather">
-            <span className="data">2019.12.16</span>
-            <span className="weather-detail">晴转多云</span>
+            <span className="date">{sysTime}</span>
+            <span className="weather-detail">
+              <img src={"/assets/weather/" + weather_img + ".png"} alt=""/>
+              {weather}
+            </span>
           </Col>
         </Row>
       </div>
@@ -29,9 +35,32 @@ class Header extends React.Component{
     this.setState({
       userName: "河畔一角"
     })
+
     setInterval(() => {
-      new Date()
+      let sysTime = Util.formateDate(new Date().getTime())
+      this.setState({
+        sysTime
+      })
     }, 1000)
+
+    this.getWeatherAPIData()
+  }
+
+  getWeatherAPIData(){
+    let city = "苏州"
+    axios.get("https://www.tianqiapi.com/api/?version=v6&city="+ encodeURIComponent(city) +"&appid=86775272&appsecret=lHspRtk5?vue=1")
+    .then((res) => {
+      if(res.data.errcode === 100){
+        return console.log(res.data.errmsg)
+      }
+      this.setState({
+        weather: res.data.wea,
+        weather_img: res.data.wea_img
+      })
+    })
+    .catch((err) => {
+      console.log(err)
+    })
   }
 }
 
