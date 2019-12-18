@@ -494,7 +494,7 @@ module.exports = function(webpackEnv) {
                   sourceMap: true,
                   // 定制主题
                   modifyVars: {
-                    '@primary-color': '#f9c700'
+                    '@primary-color': '#1890ff'
                   },
                   javascriptEnabled: true,
                 }
