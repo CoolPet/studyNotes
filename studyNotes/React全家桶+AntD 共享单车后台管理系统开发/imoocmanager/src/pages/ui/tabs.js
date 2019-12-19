@@ -125,7 +125,7 @@ class Tab extends React.Component{
     const { panes } = this.state
     panes.splice(targetKey - 1, 1)
     this.setState({ 
-      panes ,
+      panes,
       activeKey: (targetKey-1).toString()
     })
   }
