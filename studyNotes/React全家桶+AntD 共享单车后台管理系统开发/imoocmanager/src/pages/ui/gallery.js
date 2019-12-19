@@ -2,13 +2,16 @@ import React from "react"
 import { 
   Card, 
   Row, 
-  Col 
+  Col,
+  Modal
 } from "antd"
 import "./index.less"
 
 const { Meta } = Card
 class Gallery extends React.Component{
   state = {
+    visible: false,
+    currentImg: "",
     galleryImg: [
       [
         "/assets/gallery/1.png",
@@ -49,71 +52,112 @@ class Gallery extends React.Component{
   }
 
   render(){
-    const { galleryImg } = this.state
+    const { galleryImg, visible, currentImg } = this.state
     return(
-      <Row>
-        <Col span={5} className="col-padding">
-          {
-            galleryImg[0].map((item, index) => (
-                <Card 
-                  cover={<img alt="example" src={item}/>}
-                  key={index}
-                >
-                  <Meta title="Europe Street beat" description="www.instagram.com" />
-                </Card>
-            ))
-          }
-        </Col>
-        <Col span={5} className="col-padding">
-          {
-            galleryImg[1].map((item, index) => (
-                <Card 
-                  cover={<img alt="example" src={item}/>}
-                  key={index}
-                >
-                  <Meta title="Europe Street beat" description="www.instagram.com" />
-                </Card>
-            ))
-          }
-        </Col>
-        <Col span={5} className="col-padding">
-          {
-            galleryImg[2].map((item, index) => (
-                <Card 
-                  cover={<img alt="example" src={item}/>}
-                  key={index}
-                >
-                  <Meta title="Europe Street beat" description="www.instagram.com" />
-                </Card>
-            ))
-          }
-        </Col>
-        <Col span={5} className="col-padding">
-          {
-            galleryImg[3].map((item, index) => (
-                <Card 
-                  cover={<img alt="example" src={item}/>}
-                  key={index}
-                >
-                  <Meta title="Europe Street beat" description="www.instagram.com" />
-                </Card>
-            ))
-          }
-        </Col>
-        <Col span={4} className="col-padding">
-          {
-            galleryImg[4].map((item, index) => (
-                <Card 
-                  cover={<img alt="example" src={item}/>}
-                  key={index}
-                >
-                  <Meta title="Europe Street beat" description="www.instagram.com" />
-                </Card>
-            ))
-          }
-        </Col>
-      </Row>
+      <div>
+        <Row gutter={10}>
+          <Col span={5}>
+            {
+              galleryImg[0].map((item, index) => (
+                  <Card 
+                    cover={
+                      <img alt="example" src={item}
+                        onClick={() => this.openGallery(item)}
+                      />
+                    }
+                    key={index}
+                  >
+                    <Meta title="Europe Street beat" description="www.instagram.com" />
+                  </Card>
+              ))
+            }
+          </Col>
+          <Col span={5}>
+            {
+              galleryImg[1].map((item, index) => (
+                  <Card 
+                    cover={
+                      <img alt="example" src={item}
+                        onClick={() => this.openGallery(item)}
+                      />
+                    }
+                    key={index}
+                  >
+                    <Meta title="Europe Street beat" description="www.instagram.com" />
+                  </Card>
+              ))
+            }
+          </Col>
+          <Col span={5}>
+            {
+              galleryImg[2].map((item, index) => (
+                  <Card 
+                    cover={
+                      <img alt="example" src={item}
+                        onClick={() => this.openGallery(item)}
+                      />}
+                    key={index}
+                  >
+                    <Meta title="Europe Street beat" description="www.instagram.com" />
+                  </Card>
+              ))
+            }
+          </Col>
+          <Col span={5}>
+            {
+              galleryImg[3].map((item, index) => (
+                  <Card 
+                    cover={
+                      <img alt="example" src={item}
+                        onClick={() => this.openGallery(item)}
+                      />}
+                    key={index}
+                  >
+                    <Meta title="Europe Street beat" description="www.instagram.com" />
+                  </Card>
+              ))
+            }
+          </Col>
+          <Col span={4}>
+            {
+              galleryImg[4].map((item, index) => (
+                  <Card 
+                    cover={
+                      <img alt="example" src={item}
+                        onClick={() => this.openGallery(item)}
+                      />}
+                    key={index}
+                  >
+                    <Meta title="Europe Street beat" description="www.instagram.com" />
+                  </Card>
+              ))
+            }
+          </Col>
+        </Row>
+        <Modal
+          visible={visible}
+          title="图片画廊"
+          onCancel={this.handleCancel}
+          footer={null}
+          width={300}
+        >
+          <img src={currentImg} alt="" style={{width: "100%"}}/>
+        </Modal>
+      </div>
     )
+  }
+
+  openGallery = (imgSrc) => {
+    this.setState({
+      visible: true,
+      currentImg: imgSrc
+    })
+  }
+
+  handleCancel = () => {
+    this.setState({
+      visible: false
+    })
   }
 }
 
