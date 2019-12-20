@@ -120,6 +120,6 @@ const MenuConfig = [
   {
       title:'权限设置',
       key:'/admin/permission'
-  },
+  }
 ];
 export default MenuConfig
