@@ -1,4 +1,5 @@
 export default {
+  // 时间格式化
   formateDate(time){
     if(!time) return ""
     let date = new Date(time)
@@ -16,5 +17,20 @@ export default {
   // 位数不足两位的补全 0
   supplement(nn){
     return nn = nn < 10 ? '0' + nn : nn;
-  } 
+  },
+  // 分页
+  pagination(data, callback){
+    return {
+      onChange:(current) => {
+        callback(current)
+      },
+      current: data.page,
+      pageSize: data.page_size,
+      total: data.total_count,
+      showTotal:() => {
+        return `共${data.total_count}条`
+      },
+      showQuickJumper: true
+    }
+  }
 }

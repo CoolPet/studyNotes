@@ -19,7 +19,7 @@ export default class Axios{
       }).then((response) => {
         if(response.status === 200){
           if(response.data.code === 0){
-            resolve(response.data.result.list)
+            resolve(response.data.result)
             loading.style.display = "none"
           }else{
             Modal.info({

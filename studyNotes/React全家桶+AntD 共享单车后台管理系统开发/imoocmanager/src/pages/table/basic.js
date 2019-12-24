@@ -7,13 +7,15 @@ import {
   Button,
   message
 } from "antd"
+import Utils from "../../utils/util"
 
 class Basic extends React.Component{
   state = {
     dataSourceList: [],
     selectedRows: [],
     selectedId: [],
-    selectedIds: []
+    selectedIds: [],
+    page: 1
   }
 
   render(){
@@ -155,7 +157,7 @@ class Basic extends React.Component{
       "7":"桌球",
       "8":"麦霸"
     }
-    const { dataSourceList, selectedRowKeys, selectedId } = this.state
+    const { dataSourceList, selectedRowKeys, selectedId, pagination } = this.state
     const rowSelection = {
       type: "radio",
       selectedRowKeys
@@ -232,6 +234,15 @@ class Basic extends React.Component{
             }}
           />
         </Card>
+        <Card title="表格分页-Mock">
+          <Table 
+            bordered
+            columns={columns}
+            dataSource={dataSourceList}
+            rowKey={record => record.id}
+            pagination={pagination}
+          />
+        </Card>
       </div>
     )
   }
@@ -242,14 +253,23 @@ class Basic extends React.Component{
 
   // 动态获取 mock 数据
   request = () => {
+    let _this = this
     axios.ajax({
       url: "/table/list",
       data:{
+        params:{
+          page: this.state.page
+        },
         isShowLoading: true
       }
     }).then((res) => {
+      res.page = this.state.page
       this.setState({
-        dataSourceList: res
+        dataSourceList: res.list,
+        pagination: Utils.pagination(res, (current) => {
+          _this.state.page = current
+          _this.request()
+        })
       })
     }).catch((err) => {
       console.log(err)
