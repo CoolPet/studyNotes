@@ -12,7 +12,8 @@ class High extends React.Component{
   }
 
   render(){
-    const columns = [
+    const { dataSourceList, sortOrder } = this.state
+    const sideColumns = [
       {
         title: "id",
         dataIndex: "id",
@@ -34,6 +35,11 @@ class High extends React.Component{
         render(sex){
           return sex === 1 ? "男" : "女"
         }
+      },
+      {
+        title: "年龄",
+        dataIndex: "age",
+        align: 'center'
       },
       {
         title: "状态",
@@ -77,6 +83,202 @@ class High extends React.Component{
         fixed: "right"
       }
     ]
+    const headColumns = [
+      {
+        title: "id",
+        dataIndex: "id",
+        align: 'center'
+      },
+      {
+        title: "用户名",
+        dataIndex: "userName",
+        align: 'center'
+      },
+      {
+        title: "性别",
+        dataIndex: "sex",
+        align: 'center',
+        render(sex){
+          return sex === 1 ? "男" : "女"
+        }
+      },
+      {
+        title: "年龄",
+        dataIndex: "age",
+        align: 'center'
+      },
+      {
+        title: "状态",
+        dataIndex: "state",
+        align: 'center',
+        render(state){
+          return configState[state]
+        }
+      },
+      {
+        title: "爱好",
+        dataIndex: "interest",
+        align: 'center',
+        render(interest){
+          return configInterest[interest]
+        }
+      },
+      {
+        title: "婚姻状况",
+        dataIndex: "isMarried",
+        align: 'center',
+        render(isMarried){
+          return isMarried === 1 ? "未婚" : "已婚"
+        }
+      },
+      {
+        title: "生日",
+        dataIndex: "birthday",
+        align: 'center'
+      },
+      {
+        title: "地址",
+        dataIndex: "address",
+        align: 'center'
+      },
+      {
+        title: "早起时间",
+        dataIndex: "time",
+        align: 'center'
+      }
+    ]
+    const sortColumns = [
+      {
+        title: "id",
+        dataIndex: "id",
+        align: 'center'
+      },
+      {
+        title: "用户名",
+        dataIndex: "userName",
+        align: 'center'
+      },
+      {
+        title: "性别",
+        dataIndex: "sex",
+        align: 'center',
+        render(sex){
+          return sex === 1 ? "男" : "女"
+        }
+      },
+      {
+        title: "年龄",
+        dataIndex: "age",
+        align: 'center',
+        sorter: (a, b) => {
+          return a.age - b.age
+        },
+        sortOrder: sortOrder
+      },
+      {
+        title: "状态",
+        dataIndex: "state",
+        align: 'center',
+        render(state){
+          return configState[state]
+        }
+      },
+      {
+        title: "爱好",
+        dataIndex: "interest",
+        align: 'center',
+        render(interest){
+          return configInterest[interest]
+        }
+      },
+      {
+        title: "婚姻状况",
+        dataIndex: "isMarried",
+        align: 'center',
+        render(isMarried){
+          return isMarried === 1 ? "未婚" : "已婚"
+        }
+      },
+      {
+        title: "生日",
+        dataIndex: "birthday",
+        align: 'center'
+      },
+      {
+        title: "地址",
+        dataIndex: "address",
+        align: 'center'
+      },
+      {
+        title: "早起时间",
+        dataIndex: "time",
+        align: 'center'
+      }
+    ]
+    const operateColumns = [
+      {
+        title: "id",
+        dataIndex: "id",
+        align: 'center'
+      },
+      {
+        title: "用户名",
+        dataIndex: "userName",
+        align: 'center'
+      },
+      {
+        title: "性别",
+        dataIndex: "sex",
+        align: 'center',
+        render(sex){
+          return sex === 1 ? "男" : "女"
+        }
+      },
+      {
+        title: "年龄",
+        dataIndex: "age",
+        align: 'center'
+      },
+      {
+        title: "状态",
+        dataIndex: "state",
+        align: 'center',
+        render(state){
+          return configState[state]
+        }
+      },
+      {
+        title: "爱好",
+        dataIndex: "interest",
+        align: 'center',
+        render(interest){
+          return configInterest[interest]
+        }
+      },
+      {
+        title: "婚姻状况",
+        dataIndex: "isMarried",
+        align: 'center',
+        render(isMarried){
+          return isMarried === 1 ? "未婚" : "已婚"
+        }
+      },
+      {
+        title: "生日",
+        dataIndex: "birthday",
+        align: 'center'
+      },
+      {
+        title: "地址",
+        dataIndex: "address",
+        align: 'center'
+      },
+      {
+        title: "早起时间",
+        dataIndex: "time",
+        align: 'center'
+      }
+    ]
     let configState = {
       "1": "咸鱼一条",
       "2": "风华浪子",
@@ -94,27 +296,45 @@ class High extends React.Component{
       "7":"桌球",
       "8":"麦霸"
     }
-    const { dataSourceList } = this.state
     return(
       <div>
         <Card title="头部固定">
           <Table 
             bordered
-            columns={columns}
+            columns={headColumns}
             dataSource={dataSourceList}
             rowKey={record => record.id}
             pagination={false}
-            scroll={{y: 240}}
+            scroll={{y: 300}}
           />
         </Card>
         <Card title="左侧固定">
           <Table 
             bordered
-            columns={columns}
+            columns={sideColumns}
             dataSource={dataSourceList}
             rowKey={record => record.id}
             pagination={false}
             scroll={{x: 1300}}
+          />
+        </Card>
+        <Card title="表格排序">
+          <Table 
+            bordered
+            columns={sortColumns}
+            dataSource={dataSourceList}
+            rowKey={record => record.id}
+            pagination={false}
+            onChange={this.handleChange}
+          />
+        </Card>
+        <Card title="操作按钮">
+          <Table 
+            bordered
+            columns={operateColumns}
+            dataSource={dataSourceList}
+            rowKey={record => record.id}
+            pagination={false}
           />
         </Card>
       </div>
@@ -128,7 +348,7 @@ class High extends React.Component{
   request = () => {
     let _this = this
     axios.ajax({
-      url: "/table/list",
+      url: "/table/high/list",
       data:{
         params:{
           page: this.state.page
@@ -146,6 +366,12 @@ class High extends React.Component{
       })
     }).catch((err) => {
       console.log(err)
+    })
+  }
+
+  handleChange = (pagination, filters, sorter) => {
+    this.setState({
+      sortOrder: sorter.order
     })
   }
 }
