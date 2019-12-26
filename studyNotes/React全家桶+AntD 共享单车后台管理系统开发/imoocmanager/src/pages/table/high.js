@@ -1,7 +1,11 @@
 import React from "react"
 import {
   Card, 
-  Table
+  Table,
+  Badge,
+  Button,
+  Modal,
+  message
 } from "antd"
 import axios from "../../axios"
 import Utils from "../../utils/util"
@@ -252,7 +256,17 @@ class High extends React.Component{
         dataIndex: "interest",
         align: 'center',
         render(interest){
-          return configInterest[interest]
+          let config = {
+            "1": <Badge status="success" text="游泳"/>,
+            "2": <Badge status="error" text="打篮球"/>,
+            "3": <Badge status="default" text="踢足球"/>,
+            "4": <Badge status="processing" text="跑步"/>,
+            "5": <Badge status="warning" text="爬山"/>,
+            "6": <Badge status="success" text="骑行"/>,
+            "7": <Badge status="error" text="桌球"/>,
+            "8": <Badge status="default" text="麦霸"/>
+          }
+          return config[interest]
         }
       },
       {
@@ -277,6 +291,12 @@ class High extends React.Component{
         title: "早起时间",
         dataIndex: "time",
         align: 'center'
+      },
+      {
+        title: "操作",
+        render:(item) => {
+          return <Button size="small" type="danger" style={{margin: 0}} onClick={() => {this.handleDelete(item)}}>删除</Button>
+        }
       }
     ]
     let configState = {
@@ -366,6 +386,25 @@ class High extends React.Component{
       })
     }).catch((err) => {
       console.log(err)
+    })
+  }
+
+  handleDelete = (item) => {
+    let list = this.state.dataSourceList
+    let arr = item
+    let ids = []
+    Modal.confirm({
+      title:"确认删除",
+      content: "确认删除当前数据",
+      onOk:() => {
+        ids = list.filter((item) => {
+          return item!==arr
+        })
+        message.success("删除成功")
+        this.setState({
+          dataSourceList: ids
+        })
+      }
     })
   }
 
