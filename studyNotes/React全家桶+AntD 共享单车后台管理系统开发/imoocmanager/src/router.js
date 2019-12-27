@@ -18,6 +18,7 @@ import Home from "./pages/home"
 import NoMatch from "./pages/nomatch"
 import City from "./pages/city"
 import Rich from "./pages/rich"
+import Order from "./pages/order"
 
 class IRouter extends React.Component{
   render(){
@@ -42,6 +43,7 @@ class IRouter extends React.Component{
                 <Route path="/admin/table/high" component={High}/>
                 <Route path="/admin/rich" component={Rich}/>
                 <Route path="/admin/city" component={City}/>
+                <Route path="/admin/order" component={Order}/>
                 <Route component={NoMatch}/>
               </Switch>
             </Admin>
