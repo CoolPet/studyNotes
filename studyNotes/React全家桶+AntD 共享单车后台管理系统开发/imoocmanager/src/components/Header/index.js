@@ -6,27 +6,38 @@ import axios from "axios"
 
 class Header extends React.Component{
   render(){
+    const menuType = this.props.menuType
     const { userName, sysTime, weather_img, weather } = this.state
     return(
       <div className="header">
         <Row className="header-top">
-          <Col span={24}>
+          {
+            menuType ? 
+            <Col span={6} className="logoImg">
+              <img src="/assets/logo-ant.svg" alt=""/>
+              <span>IMooc 通用管理系统</span>
+            </Col>: ""
+          }
+          <Col span={menuType ? 18 : 24}>
             <span>欢迎,{userName}</span>
-            <a href="/#">退出</a>
+            <a>退出</a>
           </Col>
         </Row>
-        <Row className="breadcrumb">
-          <Col span={4} className="breadcrumb-title">
-            首页
-          </Col>
-          <Col span={20} className="weather">
-            <span className="date">{sysTime}</span>
-            <span className="weather-detail">
-              <img src={"/assets/weather/" + weather_img + ".png"} alt=""/>
-              {weather}
-            </span>
-          </Col>
-        </Row>
+        {
+          menuType ? "" : 
+          <Row className="breadcrumb">
+            <Col span={4} className="breadcrumb-title">
+              首页
+            </Col>
+            <Col span={20} className="weather">
+              <span className="date">{sysTime}</span>
+              <span className="weather-detail">
+                <img src={"/assets/weather/" + weather_img + ".png"} alt=""/>
+                {weather}
+              </span>
+            </Col>
+          </Row>
+        }
       </div>
     )
   }

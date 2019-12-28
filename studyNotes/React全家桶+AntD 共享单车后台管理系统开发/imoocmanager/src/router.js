@@ -2,6 +2,7 @@ import React from "react"
 import { HashRouter, Route, Switch } from "react-router-dom"
 import App from "./App"
 import Admin from "./Admin"
+import Common from "./Common"
 import Buttons from "./pages/ui/buttons"
 import Modals from "./pages/ui/modals"
 import Loading from "./pages/ui/loadings"
@@ -19,6 +20,7 @@ import NoMatch from "./pages/nomatch"
 import City from "./pages/city"
 import Rich from "./pages/rich"
 import Order from "./pages/order"
+import Details from "./pages/order/details"
 
 class IRouter extends React.Component{
   render(){
@@ -47,6 +49,11 @@ class IRouter extends React.Component{
                 <Route component={NoMatch}/>
               </Switch>
             </Admin>
+          }/>
+          <Route path="/common" render={() => 
+            <Common>
+              <Route path="/common/order/detail/:orderId" component={Details}/>
+            </Common>  
           }/>
         </App>
       </HashRouter>
