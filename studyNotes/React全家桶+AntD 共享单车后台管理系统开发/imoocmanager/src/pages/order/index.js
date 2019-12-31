@@ -11,6 +11,7 @@ import {
 } from "antd"
 import axios from "../../axios"
 import Utils from "../../utils/util"
+import BaseForm from "../../components/BaseForm"
 
 const FormItem = Form.Item
 const { Option } = Select
@@ -24,6 +25,60 @@ class Order extends React.Component{
     selectedRowKeys:[],
     selectedItem: ""
   }
+
+  formList = [
+    {
+      type: "SELECT",
+      label: "城市",
+      field: "city",
+      placeholder: "全部",
+      initialValue: "1",
+      width: 100,
+      list: [
+        {
+          id: "0",
+          name: "全部"
+        },
+        {
+          id: "1",
+          name: "北京市"
+        },
+        {
+          id: "2",
+          name: "天津市"
+        },
+        {
+          id: "3",
+          name: "上海市"
+        }
+      ]
+    },
+    {
+      type: "时间查询"
+    },
+    {
+      type: "SELECT",
+      label: "订单状态",
+      field: "order_status",
+      placeholder: "全部",
+      initialValue: "1",
+      width: 140,
+      list: [
+        {
+          id: "0",
+          name: "进行中"
+        },
+        {
+          id: "1",
+          name: "进行中(临时锁车)"
+        },
+        {
+          id: "2",
+          name: "结束行程"
+        }
+      ]
+    }
+  ]
 
   render(){
     const { list, pagination, selectedRowKeys } = this.state
@@ -126,7 +181,7 @@ class Order extends React.Component{
     return(
       <div>
         <Card>
-          <FilterForm />
+          <BaseForm formList={this.formList} filterSubmit={this.handleSearch}/>
         </Card>
         <Card>
           <Button 
@@ -193,6 +248,11 @@ class Order extends React.Component{
     })
   }
 
+  handleSearch = (params) =>{
+    this.params = params
+    this.requestList()
+  }
+
   onRowClick = (record, index) => {
     let selectKey = [index]
     this.setState({
@@ -230,87 +290,5 @@ class Order extends React.Component{
     window.open("/#/common/order/detail/" + item.id)
   }
 }
-
-class FilterForm extends React.Component{
-  render(){
-    const { getFieldDecorator } = this.props.form
-    return(
-      <Form layout="inline">
-        <FormItem label="城市">
-          {
-            getFieldDecorator("city_id")(
-              <Select
-                placeholder="全部"
-                style={{width: 100}}
-              >
-                <Option value="">全部</Option>
-                <Option value="1">北京市</Option>
-                <Option value="2">天津市</Option>
-                <Option value="3">深圳市</Option>
-              </Select>
-            )
-          }
-        </FormItem>
-        <FormItem>
-          {
-            getFieldDecorator("start_time")(
-              <DatePicker showTime format="YYYY-MM-DD HH:mm:ss"/>
-            )
-          }
-        </FormItem>
-        <FormItem>~</FormItem>
-        <FormItem>
-          {
-            getFieldDecorator("end_time")(
-              <DatePicker showTime format="YYYY-MM-DD HH:mm:ss"/>
-            )
-          }
-        </FormItem>
-        <FormItem label="订单状态">
-          {
-            getFieldDecorator("op_mode")(
-              <Select
-                placeholder="全部"
-                style={{width: 140}}
-              >
-                <Option value="">全部</Option>
-                <Option value="1">进行中</Option>
-                <Option value="2">进行中(临时锁车)</Option>
-                <Option value="3">行程结束</Option>
-              </Select>
-            )
-          }
-        </FormItem>
-        <FormItem>
-          <Button 
-            type="primary" 
-            style={{marginBottom: 0}}
-            onClick={this.handleSearch}
-          >
-            查询
-          </Button>
-          <Button 
-            style={{marginBottom: 0}}
-          >
-            重置
-          </Button>
-        </FormItem>
-      </Form>
-    )
-  }
-
-  handleSearch = () => {
-    let orderInfo = this.props.form.getFieldsValue()
-    axios.ajax({
-      url: "/order/search",
-      data:{
-        params: orderInfo
-      }
-    }).then((res) => {
-      message.success(res)
-    })
-  }
-}
-FilterForm = Form.create({})(FilterForm)
 
 export default Order
