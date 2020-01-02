@@ -1,20 +1,13 @@
 import React from "react"
 import {
   Card, 
-  Form,
   Button,
-  Table,
-  Select,
-  DatePicker,
-  message,
   Modal
 } from "antd"
 import axios from "../../axios"
-import Utils from "../../utils/util"
 import BaseForm from "../../components/BaseForm"
-
-const FormItem = Form.Item
-const { Option } = Select
+import ETable from "../../components/ETable"
+import Utils from "../../utils/util"
 
 class Order extends React.Component{
   state = {
@@ -168,16 +161,6 @@ class Order extends React.Component{
         }
       }
     ]
-    const rowSelection = {
-      type: "radio",
-      selectedRowKeys,
-      onChange:(selectedRowKeys, selectedRows) => {
-        this.setState({
-          selectedRowKeys,
-          selectedItem: selectedRows
-        })
-      }
-    }
     return(
       <div>
         <Card>
@@ -200,19 +183,13 @@ class Order extends React.Component{
           </Button>
         </Card>
         <div className="content-wrapper">
-          <Table 
-            bordered
+          <ETable 
+            updateSelectedItem={Utils.updateSelectedItem.bind(this)}
             columns={columns}
             dataSource={list}
             pagination={pagination}
-            rowSelection={rowSelection}
-            onRow={(record, index) => {
-              return {
-                onClick: () => {
-                  this.onRowClick(record, index)
-                }
-              }
-            }}
+            selectedRowKeys={selectedRowKeys}
+            rowSelection="radio"
           />
         </div>
       </div>
@@ -226,39 +203,20 @@ class Order extends React.Component{
   requestList = () => {
     const { params } = this.state
     let _this = this
-    axios.ajax({
-      url: "/order/list",
-      data: {
-        params:{
-          page: params.page
-        }
-      }
-    }).then((res) => {
-      res.page = params.page
-      this.setState({
-        list: res.item_list.map((item, index) => {
-          item.key = index
-          return item
-        }),
-        pagination: Utils.pagination(res, (current) => {
-          params.page = current
-          _this.requestList()
-        })
-      })
+    this.setState({
+      selectedRowKeys: "",
+      selectedItem: ""
     })
+    axios.requestList(
+      this, 
+      "/order/list",
+      _this.params === undefined ? params : _this.params
+    )
   }
 
   handleSearch = (params) =>{
     this.params = params
     this.requestList()
-  }
-
-  onRowClick = (record, index) => {
-    let selectKey = [index]
-    this.setState({
-      selectedRowKeys: selectKey,
-      selectedItem: record
-    })
   }
 
   // 结束订单

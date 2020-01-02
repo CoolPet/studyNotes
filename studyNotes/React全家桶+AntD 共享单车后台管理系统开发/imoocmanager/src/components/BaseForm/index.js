@@ -4,7 +4,6 @@ import {
   Form,
   Button,
   Checkbox,
-  Radio,
   Select,
   DatePicker
 } from "antd"
@@ -27,6 +26,7 @@ class FilterForm extends React.Component{
           </Button>
           <Button 
             style={{marginBottom: 0}}
+            onClick={this.reset}
           >
             重置
           </Button>
@@ -46,7 +46,7 @@ class FilterForm extends React.Component{
         let initialValue = item.initialValue || ""
         let placeHolder = item.placeholder
         let width = item.width
-        if (item.type == '时间查询'){
+        if (item.type === '时间查询'){
           const begin_time = <FormItem label="订单时间" key="start_time">
             {
               getFieldDecorator('begin_time')(
@@ -120,9 +120,14 @@ class FilterForm extends React.Component{
   }
 
   handleSearch = () => {
-    console.log(this.props)
     let fieldsValue = this.props.form.getFieldsValue()
     this.props.filterSubmit(fieldsValue)
+  }
+
+  // 重置
+  reset = () => {
+    // form 表单的重置方法
+    this.props.form.resetFields()
   }
 }
 

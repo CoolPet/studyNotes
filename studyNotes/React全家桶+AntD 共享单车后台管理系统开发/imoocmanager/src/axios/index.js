@@ -1,4 +1,5 @@
 import axios from "axios"
+import Utils from "../utils/util"
 import { Modal } from "antd"
 
 export default class Axios{
@@ -31,6 +32,31 @@ export default class Axios{
           reject(response.data)
         }
       })
+    })
+  }
+
+  // 封装表单
+  static requestList(_this, url, params){
+    var data = {
+      params
+    }
+    this.ajax({
+      url,
+      data
+    }).then((data) => {
+      if(data){
+        data.page = params.page
+        _this.setState({
+          list: data.item_list.map((item, index) => {
+            item.key = index
+            return item
+          }),
+          pagination: Utils.pagination(data, (current) => {
+            params.page = current
+            _this.requestList()
+          })
+        })
+      }
     })
   }
 }
