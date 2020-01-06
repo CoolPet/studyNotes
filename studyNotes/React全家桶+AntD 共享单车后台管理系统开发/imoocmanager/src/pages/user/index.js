@@ -258,9 +258,15 @@ class User extends React.Component{
   handleSubmit = () => {
     let type = this.state.type
     let data = this.userForm.props.form.getFieldsValue()
-    console.log(data)
-    this.setState({
-      isVisible: false
+    axios.ajax({
+      url: "/user/add",
+      data:{
+        params: data
+      }
+    }).then((res) => {
+      if(res.code === 0){
+        
+      }
     })
   }
 }
