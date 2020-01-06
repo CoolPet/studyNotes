@@ -21,6 +21,7 @@ import City from "./pages/city"
 import Rich from "./pages/rich"
 import Order from "./pages/order"
 import Details from "./pages/order/details"
+import User from "./pages/user"
 
 class IRouter extends React.Component{
   render(){
@@ -46,6 +47,7 @@ class IRouter extends React.Component{
                 <Route path="/admin/rich" component={Rich}/>
                 <Route path="/admin/city" component={City}/>
                 <Route path="/admin/order" component={Order}/>
+                <Route path="/admin/user" component={User}/>
                 <Route component={NoMatch}/>
               </Switch>
             </Admin>
