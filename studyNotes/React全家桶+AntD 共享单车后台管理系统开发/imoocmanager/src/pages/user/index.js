@@ -3,6 +3,7 @@ import axios from "../../axios"
 import Utils from "../../utils/util"
 import ETable from "../../components/ETable"
 import BaseForm from "../../components/BaseForm"
+import moment from "moment"
 import { 
   Card,
   Button,
@@ -11,7 +12,8 @@ import {
   Input,
   Radio,
   Select,
-  DatePicker
+  DatePicker,
+  message
 } from "antd"
 
 const FormItem = Form.Item
@@ -52,7 +54,7 @@ class User extends React.Component{
   ]
 
   render(){
-    const { pagination, list, selectedRowKeys, title, isVisible, type } = this.state
+    const { pagination, list, selectedRowKeys, title, isVisible, type, userInfo } = this.state
     const columns = [
       {
         title: "id",
@@ -115,7 +117,7 @@ class User extends React.Component{
     let configState = {
       "1": "咸鱼一条",
       "2": "风华浪子",
-      "3": "北大才子",
+      "3": "北大才子一枚",
       "4": "百度FE",
       "5": "创业者"
     }
@@ -128,6 +130,12 @@ class User extends React.Component{
       "6":"骑行",
       "7":"桌球",
       "8":"麦霸"
+    }
+    let footer = {}
+    if(type === "detail"){
+      footer = {
+        footer: null
+      }
     }
 
     return(
@@ -202,15 +210,18 @@ class User extends React.Component{
           visible={isVisible}
           onOk={this.handleSubmit}
           onCancel={() => {
+            this.userForm.props.form.resetFields()
             this.setState({
               isVisible: false
             })
           }}
           okText="确认"
           cancelText="取消"
+          {...footer}
         >
           <UserForm 
             type={type} 
+            userInfo={userInfo}
             wrappedComponentRef={(inst) => {
               this.userForm = inst
             }}
@@ -239,6 +250,7 @@ class User extends React.Component{
 
   // 功能区操作
   handleOperate = (type) => {
+    let item = this.state.selectedItem
     if(type === "create"){
       this.setState({
         type,
@@ -246,11 +258,60 @@ class User extends React.Component{
         title: "创建员工"
       })
     }else if(type === "edit"){
-      console.log("编辑员工")
+      if(!item){
+        Modal.info({
+          title: "提示",
+          content: "请选择一个用户"
+        })
+        return
+      }
+      this.setState({
+        type,
+        isVisible: true,
+        title: "编辑员工",
+        userInfo: item
+      })
     }else if(type === "detail"){
-      console.log("员工详情")
+      if(!item){
+        Modal.info({
+          title: "提示",
+          content: "请选择一个用户"
+        })
+        return
+      }
+      this.setState({
+        type,
+        isVisible: true,
+        title: "编辑员工",
+        userInfo: item
+      })
     }else{
-      console.log("删除员工")
+      if(!item){
+        Modal.info({
+          title: "提示",
+          content: "请选择一个用户"
+        })
+        return
+      }
+      Modal.confirm({
+        title: "确定删除",
+        content: `是否要删除${item.username}的信息`,
+        onOk:() => {
+          axios.ajax({
+            url: "/user/delete",
+            data: {
+              params: item
+            }
+          }).then(() => {
+            message.success("删除成功")
+            this.setState({
+              selectedRowKeys: [],
+              selectedItem: ""
+            })
+            this.requestList()
+          })
+        }
+      })
     }
   }
 
@@ -259,21 +320,35 @@ class User extends React.Component{
     let type = this.state.type
     let data = this.userForm.props.form.getFieldsValue()
     axios.ajax({
-      url: "/user/add",
+      url: type === "create" ? "/user/add" : "/user/edit",
       data:{
         params: data
       }
-    }).then((res) => {
-      if(res.code === 0){
-        
-      }
+    }).then(() => {
+      this.setState({
+        isVisible: false,
+        selectedRowKeys: [],
+        selectedItem: ""
+      })
+      message.success(type === "create" ? "创建成功" : "编辑成功")
+      this.userForm.props.form.resetFields()
+      this.requestList()
     })
   }
 }
 
 class UserForm extends React.Component{
   render(){
+    let type = this.props.type
+    let userInfo = this.props.userInfo || {}
     const { getFieldDecorator } = this.props.form
+    let configState = {
+      "1": "咸鱼一条",
+      "2": "风华浪子",
+      "3": "北大才子一枚",
+      "4": "百度FE",
+      "5": "创业者"
+    }
     const formItemLayout = {
       labelCol: {
         span: 5
@@ -287,14 +362,20 @@ class UserForm extends React.Component{
       <Form layout="horizontal" {...formItemLayout}>
         <FormItem label="用户名">
           {
-            getFieldDecorator("user_name")(
+            type === "detail" ? userInfo.username :
+            getFieldDecorator("user_name", {
+              initialValue: userInfo.username
+            })(
               <Input type="text" placeholder="请输入用户名"/>
             )
           }
         </FormItem>
         <FormItem label="性别">
           {
-            getFieldDecorator("sex")(
+            type === "detail" ? userInfo.sex === 1 ? "男" : "女" :
+            getFieldDecorator("sex", {
+              initialValue: userInfo.sex
+            })(
               <RadioGroup>
                 <Radio value={1}>男</Radio>
                 <Radio value={2}>女</Radio>
@@ -304,7 +385,10 @@ class UserForm extends React.Component{
         </FormItem>
         <FormItem label="状态">
           {
-            getFieldDecorator("state")(
+            type === "detail" ? configState[userInfo.state] :
+            getFieldDecorator("state", {
+              initialValue: userInfo.state
+            })(
               <Select>
                 <Option value={1}>咸鱼一条</Option>
                 <Option value={2}>风华浪子</Option>
@@ -317,14 +401,20 @@ class UserForm extends React.Component{
         </FormItem>
         <FormItem label="生日">
           {
-            getFieldDecorator("birthday")(
+            type === "detail" ? userInfo.birthday :
+            getFieldDecorator("birthday", {
+              initialValue: moment(userInfo.birthday)
+            })(
               <DatePicker />
             )
           }
         </FormItem>
         <FormItem label="联系地址">
           {
-            getFieldDecorator("address")(
+            type === "detail" ? userInfo.address :
+            getFieldDecorator("address", {
+              initialValue: userInfo.address
+            })(
               <TextArea 
                 rows={3} 
                 placeholder="请输入联系地址"

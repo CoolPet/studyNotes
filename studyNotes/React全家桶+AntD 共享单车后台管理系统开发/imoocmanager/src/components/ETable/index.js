@@ -45,6 +45,22 @@ export default class ETable extends React.Component{
     )
   }
 
+  onSelectChange = (selectedRowKeys, selectedRows) => {
+    let rowSelection = this.props.rowSelection;
+    const selectedIds = [];
+    if(rowSelection === 'checkbox'){
+        selectedRows.map((item)=>{
+          return selectedIds.push(item.id);
+        });
+        this.setState({
+          selectedRowKeys,
+          selectedIds:selectedIds,
+          selectedItem: selectedRows[0]
+        });
+    }
+    this.props.updateSelectedItem(selectedRowKeys,selectedRows[0],selectedIds);
+  }
+
   onRowClick = (record, index) => {
     let rowSelection = this.props.rowSelection
     if(rowSelection === "checkbox"){
