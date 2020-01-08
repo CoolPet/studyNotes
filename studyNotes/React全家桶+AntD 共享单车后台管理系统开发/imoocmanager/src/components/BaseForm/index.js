@@ -10,6 +10,7 @@ import {
 import Utils from "../../utils/util"
 
 const FormItem = Form.Item
+const Option = Select.Option
 
 class FilterForm extends React.Component{
   render(){
@@ -123,6 +124,27 @@ class FilterForm extends React.Component{
               }
             </FormItem>
           formItemList.push(DATEPICKER)
+        }else if(item.type === "城市"){
+          const CITY =
+            <FormItem label="城市" key="city_id">
+              {
+                getFieldDecorator("city_id", {
+                  initialValue: "0"
+                })(
+                  <Select
+                    placeholder="全部"
+                    style={{width: 100}}
+                  >
+                    <Option value="0">全部</Option>
+                    <Option value="1">北京市</Option>
+                    <Option value="2">上海市</Option>
+                    <Option value="3">天津市</Option>
+                    <Option value="4">杭州市</Option>
+                  </Select>
+                )
+              }
+            </FormItem>
+          formItemList.push(CITY)
         }
       })
     }
